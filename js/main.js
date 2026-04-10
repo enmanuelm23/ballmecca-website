@@ -56,23 +56,50 @@ async function loadTopCoaches() {
   const container = document.getElementById('coaches-grid');
   if (!container) return;
 
-  // Your Firebase config — replace with real values after flutterfire configure
+  // Firebase config for Ballmecca
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    apiKey: "AIzaSyAEkVndOa6OtO777yrG7JkYNuOeBbUNhgs",
+    authDomain: "ballmecca-982c8.firebaseapp.com",
+    databaseURL: "https://ballmecca-982c8-default-rtdb.firebaseio.com",
+    projectId: "ballmecca-982c8",
+    storageBucket: "ballmecca-982c8.appspot.com",
+    messagingSenderId: "677614688397",
+    appId: "1:677614688397:web:d371d405eb49b003dc6ac4",
+    measurementId: "G-4MSK09MLJD"
   };
 
   try {
     // Dynamically load Firebase SDK
     const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js');
+    const { getAnalytics } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js');
     const { getFirestore, collection, query, orderBy, limit, getDocs } =
       await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js');
+    const { getDatabase, ref, get } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js');
+    const { getStorage, ref: storageRef, getDownloadURL } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js');
 
     const app = initializeApp(firebaseConfig, 'ballmecca-web');
+    getAnalytics(app);
     const db = getFirestore(app);
+    const rtdb = getDatabase(app);
+    const storage = getStorage(app);
 
+    // Use Realtime Database first if coachProfiles exists there.
+    const snapshot = await get(ref(rtdb, 'coachProfiles'));
+    if (snapshot.exists()) {
+      const rawData = snapshot.val();
+      const coaches = Array.isArray(rawData)
+        ? rawData
+        : (rawData && typeof rawData === 'object')
+          ? Object.values(rawData)
+          : [];
+
+      if (coaches.length > 0) {
+        renderCoachCards(container, coaches.slice(0, 5), storage);
+        return;
+      }
+    }
+
+    // Fall back to Firestore if RTDB doesn't have coachProfiles.
     const q = query(
       collection(db, 'coachProfiles'),
       orderBy('rating', 'desc'),
@@ -89,40 +116,60 @@ async function loadTopCoaches() {
       return;
     }
 
-    container.innerHTML = '';
-    snap.forEach(doc => {
-      const c = doc.data();
-      const stars = '★'.repeat(Math.round(c.rating || 0)) + '☆'.repeat(5 - Math.round(c.rating || 0));
-      const sport = (c.sports || []).join(', ') || 'Multi-sport';
-      container.innerHTML += `
-        <div class="coach-card reveal">
-          <div class="coach-photo">
-            ${c.photoUrl
-              ? `<img src="${c.photoUrl}" alt="${c.displayName}" loading="lazy">`
-              : `<div class="coach-placeholder">${(c.displayName || '?')[0]}</div>`}
-          </div>
-          <div class="coach-info">
-            <div class="coach-sport">${sport}</div>
-            <h3 class="coach-name">${c.displayName || 'Coach'}</h3>
-            ${c.rating > 0 ? `<div class="coach-stars">${stars} <span>${c.rating.toFixed(1)}</span></div>` : ''}
-            ${c.location ? `<div class="coach-location">📍 ${c.location}</div>` : ''}
-            <a href="https://apps.apple.com/us/app/ballmecca/id1663498139"
-               class="btn btn-outline-cyan coach-btn" target="_blank">
-              View in App
-            </a>
-          </div>
-        </div>
-      `;
-    });
-
-    // Re-observe new elements
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const coaches = [];
+    snap.forEach(doc => coaches.push(doc.data()));
+    renderCoachCards(container, coaches, storage);
 
   } catch (err) {
     console.log('Firebase not configured yet:', err.message);
     // Show placeholder cards when Firebase isn't set up yet
     showPlaceholderCoaches(container);
   }
+}
+
+function renderCoachCards(container, coaches, storage) {
+  if (!coaches || coaches.length === 0) {
+    container.innerHTML = `<p class="text-muted text-center" style="grid-column:1/-1;padding:48px 0;">
+      Coaches coming soon — <a href="https://apps.apple.com/us/app/ballmecca/id1663498139"
+      style="color:var(--cyan)">download the app</a> to be first.
+    </p>`;
+    return;
+  }
+
+  container.innerHTML = '';
+  coaches.forEach(async c => {
+    let photoHtml = `<div class="coach-placeholder">${(c.displayName || '?')[0]}</div>`;
+    if (c.photoUrl) {
+      try {
+        const photoRef = storageRef(storage, c.photoUrl);
+        const url = await getDownloadURL(photoRef);
+        photoHtml = `<img src="${url}" alt="${c.displayName}" loading="lazy">`;
+      } catch (err) {
+        console.log('Photo load error:', err.message);
+      }
+    }
+
+    const stars = '★'.repeat(Math.round(c.rating || 0)) + '☆'.repeat(5 - Math.round(c.rating || 0));
+    const sport = (c.sports || []).join(', ') || 'Multi-sport';
+    container.innerHTML += `
+      <div class="coach-card reveal">
+        <div class="coach-photo">
+          ${photoHtml}
+        </div>
+        <div class="coach-info">
+          <div class="coach-sport">${sport}</div>
+          <h3 class="coach-name">${c.displayName || 'Coach'}</h3>
+          ${c.rating > 0 ? `<div class="coach-stars">${stars} <span>${c.rating.toFixed(1)}</span></div>` : ''}
+          ${c.location ? `<div class="coach-location">📍 ${c.location}</div>` : ''}
+          <a href="https://apps.apple.com/us/app/ballmecca/id1663498139"
+             class="btn btn-outline-cyan coach-btn" target="_blank">
+            View in App
+          </a>
+        </div>
+      </div>
+    `;
+  });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
 function showPlaceholderCoaches(container) {
