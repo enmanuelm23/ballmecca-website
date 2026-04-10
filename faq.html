@@ -1,0 +1,294 @@
+<!-- faq.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Ballmecca</title>
+  <meta name="description" content="Frequently asked questions about Ballmecca — how coaching works, payments, safety, and more.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="images/favicon.png">
+  <style>
+    .page-hero { padding: 140px 0 72px; background: var(--navy-light); border-bottom: 1px solid var(--border); }
+    .page-hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; }
+    .page-hero-sub { font-size: 18px; color: rgba(255,255,255,0.7); margin-top: 16px; max-width: 480px; line-height: 1.65; }
+
+    .faq-section { padding: 80px 0; }
+
+    .faq-category { margin-bottom: 56px; }
+
+    .faq-category-title {
+      font-family: 'League Spartan';
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-family: 'League Spartan';
+      font-size: 17px;
+      font-weight: 700;
+      text-align: left;
+      padding: 20px 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover { color: var(--cyan); }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s;
+      color: var(--text-muted);
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-item.open .faq-question { color: var(--cyan); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .faq-answer-inner a { color: var(--cyan); }
+
+    .faq-cta {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      padding: 48px;
+      text-align: center;
+      margin-top: 64px;
+    }
+
+    .faq-cta h3 { font-size: 24px; margin-bottom: 12px; }
+    .faq-cta p { color: var(--text-muted); margin-bottom: 28px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span style="font-family:'League Spartan',sans-serif;font-size:22px;font-weight:800;color:var(--cyan);">Ballmecca</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html" class="active">FAQ</a></li>
+      </ul>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/ballmecca/" target="_blank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.youtube.com/@ballmecca" target="_blank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  </div>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow fade-up fade-up-1">Support</span>
+      <h1 class="fade-up fade-up-2">Frequently asked<br><span class="text-cyan">questions.</span></h1>
+      <p class="page-hero-sub fade-up fade-up-3">Everything you need to know about Ballmecca. Can't find your answer? <a href="contact.html" style="color:var(--cyan);">Contact us.</a></p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="container" style="max-width:760px;">
+
+      <!-- General -->
+      <div class="faq-category reveal">
+        <div class="faq-category-title">General</div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What is Ballmecca?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Ballmecca is a sports coaching marketplace that connects athletes with verified coaches through short video sessions. Athletes upload a clip of their performance, a coach reviews it and sends back 1–5 minutes of personalized feedback and drills. It's elite coaching made affordable and accessible — anytime, anywhere.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What sports does Ballmecca cover?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            We currently cover basketball, baseball, softball, soccer, football, tennis, golf, swimming, track & field, gymnastics, hockey, lacrosse, wrestling, rowing, and running. Dance is coming soon — download the app to be notified when it launches.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How do I get started?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Download the Ballmecca app from the <a href="https://apps.apple.com/us/app/ballmecca/id1663498139">App Store</a> or <a href="https://play.google.com/store/apps/details?id=com.ballmecca.ballmecca">Google Play</a>. Create an account, choose whether you're an athlete or a coach, and you'll be guided through the rest. It takes less than 5 minutes.
+          </div></div>
+        </div>
+      </div>
+
+      <!-- For Athletes -->
+      <div class="faq-category reveal">
+        <div class="faq-category-title">For Athletes</div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How does a coaching session work?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Browse coaches in your sport, select one, and purchase a session. Record a short video of your technique — a swing, a throw, a serve, a run. Upload it directly to your coach. They'll send back a personalized video analysis (1–5 minutes) with specific feedback and drills tailored to you.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How quickly will I get feedback?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Most coaches respond within 24–48 hours. Response time is displayed on each coach's profile. If a coach hasn't responded within the stated time, you can contact us at <a href="mailto:support@ballmecca.com">support@ballmecca.com</a>.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Is Ballmecca safe for my child?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Yes. All coaches are verified before they can accept sessions. Parental consent is required for athletes under 18. All payments are handled securely through Stripe. We take the safety of young athletes very seriously — it's core to everything we build.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What if I'm not happy with my session?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            We want every session to be valuable. If you're not satisfied, reach out to us at <a href="mailto:support@ballmecca.com">support@ballmecca.com</a> within 7 days and we'll work with you to make it right.
+          </div></div>
+        </div>
+      </div>
+
+      <!-- For Coaches -->
+      <div class="faq-category reveal">
+        <div class="faq-category-title">For Coaches</div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How do I become a coach on Ballmecca?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Download the app, create a coach account, and complete your profile. Our team will review your application and verify your credentials. Once approved, you can set your rate, choose your sports, and start accepting sessions.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How do I get paid?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Payments are processed securely through Stripe with instant payouts to your bank account. You set your own rate per session. Ballmecca takes a small platform fee; the majority goes directly to you.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What is the Coaching Rewards program?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Coaches earn profit sharing whenever an athlete they refer purchases a coaching session — receiving 50% of Ballmecca's fee on those sessions. It's our way of rewarding coaches who grow the community.
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Can I offer team subscriptions?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            Yes. Team subscriptions allow coaches to give free bite-sized feedback to their athletes while tracking activity directly through the app. It's perfect for coaches who work with schools, clubs, or youth organizations.
+          </div></div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="faq-cta reveal">
+        <h3>Still have questions?</h3>
+        <p>We're happy to help. Reach out and we'll get back to you quickly.</p>
+        <a href="contact.html" class="btn btn-cyan">Contact Us</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="footer-logo"><span style="font-family:'League Spartan',sans-serif;font-size:24px;font-weight:800;color:var(--cyan);">Ballmecca</span></div><p class="footer-tagline">Revolutionizing sports education for the next generation.</p></div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul><li><a href="policies.html#privacy">Privacy Policy</a></li><li><a href="policies.html#terms">Terms & Conditions</a></li><li><a href="policies.html#cookie">Cookie Policy</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:support@ballmecca.com">support@ballmecca.com</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 Ballmecca Inc. All rights reserved.</p><p>Born in Baltimore. Built for the world.</p></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-answer').style.maxHeight = '0';
+        });
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

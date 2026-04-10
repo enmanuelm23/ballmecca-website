@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policies — Ballmecca</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="images/favicon.png">
+  <style>
+    .page-hero { padding: 140px 0 56px; background: var(--navy-light); border-bottom: 1px solid var(--border); }
+    .page-hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 900; }
+
+    .policies-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 64px;
+      padding: 80px 0;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) { .policies-layout { grid-template-columns: 1fr; gap: 40px; } }
+
+    /* Sidebar nav */
+    .policies-nav {
+      position: sticky;
+      top: 88px;
+    }
+
+    .policies-nav h4 {
+      font-family: 'League Spartan';
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 16px;
+    }
+
+    .policies-nav ul { list-style: none; }
+
+    .policies-nav ul li { margin-bottom: 2px; }
+
+    .policies-nav ul li a {
+      display: block;
+      padding: 10px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      border-left: 2px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .policies-nav ul li a:hover,
+    .policies-nav ul li a.active {
+      color: var(--white);
+      border-left-color: var(--cyan);
+      background: rgba(0,201,177,0.05);
+      padding-left: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .policies-nav { position: static; }
+      .policies-nav ul { display: flex; flex-wrap: wrap; gap: 8px; }
+      .policies-nav ul li a { border-left: none; border: 1px solid var(--border); padding: 8px 14px; }
+    }
+
+    /* Policy sections */
+    .policy-section {
+      padding-top: 56px;
+      margin-top: -56px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 56px;
+    }
+
+    .policy-section:last-child { border-bottom: none; }
+
+    .policy-section h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .policy-section .last-updated {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .policy-section h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      margin: 28px 0 10px;
+    }
+
+    .policy-section p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .policy-section ul {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.8;
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .policy-section a { color: var(--cyan); }
+
+    /* Placeholder notice */
+    .policy-placeholder {
+      background: rgba(0,201,177,0.06);
+      border: 1px dashed rgba(0,201,177,0.3);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .policy-placeholder p {
+      color: rgba(0,201,177,0.7);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .policy-placeholder strong {
+      display: block;
+      color: var(--cyan);
+      font-family: 'League Spartan';
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span style="font-family:'League Spartan',sans-serif;font-size:22px;font-weight:800;color:var(--cyan);">Ballmecca</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/ballmecca/" target="_blank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.youtube.com/@ballmecca" target="_blank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  </div>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow fade-up fade-up-1">Legal</span>
+      <h1 class="fade-up fade-up-2">Our Policies</h1>
+      <p class="fade-up fade-up-3" style="color:var(--text-muted);margin-top:12px;">View all our policies below. Questions? <a href="mailto:support@ballmecca.com" style="color:var(--cyan);">support@ballmecca.com</a></p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="policies-layout">
+
+      <!-- Sidebar -->
+      <nav class="policies-nav">
+        <h4>Policies</h4>
+        <ul>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms & Conditions</a></li>
+          <li><a href="#returns">Returns</a></li>
+          <li><a href="#acceptable-use">Acceptable Use</a></li>
+          <li><a href="#cookie">Cookie Policy</a></li>
+          <li><a href="#dmca">DMCA</a></li>
+          <li><a href="#disclaimer">Disclaimer</a></li>
+        </ul>
+      </nav>
+
+      <!-- Policy content -->
+      <div class="policies-content">
+
+        <!-- ── PRIVACY POLICY ── -->
+        <div class="policy-section" id="privacy">
+          <h2>Privacy Policy</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE YOUR PRIVACY POLICY TEXT BELOW THIS LINE ↓ -->
+          <div class="policy-placeholder">
+            <strong>Privacy Policy Coming Soon</strong>
+            <p>Paste your Privacy Policy content here. Replace this placeholder block with your full policy text, structured into h3 headings and p paragraphs.</p>
+          </div>
+          <!-- ↑ PASTE YOUR PRIVACY POLICY TEXT ABOVE THIS LINE ↑ -->
+        </div>
+
+        <!-- ── TERMS & CONDITIONS ── -->
+        <div class="policy-section" id="terms">
+          <h2>Terms & Conditions</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE YOUR TERMS BELOW ↓ -->
+          <div class="policy-placeholder">
+            <strong>Terms & Conditions Coming Soon</strong>
+            <p>Paste your Terms & Conditions content here.</p>
+          </div>
+          <!-- ↑ END TERMS ↑ -->
+        </div>
+
+        <!-- ── RETURNS ── -->
+        <div class="policy-section" id="returns">
+          <h2>Returns Policy</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE RETURNS POLICY BELOW ↓ -->
+          <div class="policy-placeholder">
+            <strong>Returns Policy Coming Soon</strong>
+            <p>Paste your Returns Policy content here.</p>
+          </div>
+          <!-- ↑ END RETURNS ↑ -->
+        </div>
+
+        <!-- ── ACCEPTABLE USE ── -->
+        <div class="policy-section" id="acceptable-use">
+          <h2>Acceptable Use Policy</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE ACCEPTABLE USE BELOW ↓ -->
+          <div class="policy-placeholder">
+            <strong>Acceptable Use Policy Coming Soon</strong>
+            <p>Paste your Acceptable Use Policy content here.</p>
+          </div>
+          <!-- ↑ END ACCEPTABLE USE ↑ -->
+        </div>
+
+        <!-- ── COOKIE POLICY ── -->
+        <div class="policy-section" id="cookie">
+          <h2>Cookie Policy</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE COOKIE POLICY BELOW ↓ -->
+          <div class="policy-placeholder">
+            <strong>Cookie Policy Coming Soon</strong>
+            <p>Paste your Cookie Policy content here.</p>
+          </div>
+          <!-- ↑ END COOKIE POLICY ↑ -->
+        </div>
+
+        <!-- ── DMCA ── -->
+        <div class="policy-section" id="dmca">
+          <h2>DMCA</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE DMCA BELOW ↓ -->
+          <div class="policy-placeholder">
+            <strong>DMCA Notice Coming Soon</strong>
+            <p>Paste your DMCA notice content here.</p>
+          </div>
+          <!-- ↑ END DMCA ↑ -->
+        </div>
+
+        <!-- ── DISCLAIMER ── -->
+        <div class="policy-section" id="disclaimer">
+          <h2>Disclaimer</h2>
+          <p class="last-updated">Last updated: <!-- DATE --></p>
+          <!-- ↓ PASTE DISCLAIMER BELOW ↓ -->
+          <div class="policy-placeholder">
+            <strong>Disclaimer Coming Soon</strong>
+            <p>Paste your Disclaimer content here.</p>
+          </div>
+          <!-- ↑ END DISCLAIMER ↑ -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="footer-logo"><span style="font-family:'League Spartan',sans-serif;font-size:24px;font-weight:800;color:var(--cyan);">Ballmecca</span></div><p class="footer-tagline">Revolutionizing sports education for the next generation.</p></div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul><li><a href="#privacy">Privacy Policy</a></li><li><a href="#terms">Terms & Conditions</a></li><li><a href="#cookie">Cookie Policy</a></li><li><a href="#acceptable-use">Acceptable Use</a></li><li><a href="#dmca">DMCA</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:support@ballmecca.com">support@ballmecca.com</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 Ballmecca Inc. All rights reserved.</p><p>Born in Baltimore. Built for the world.</p></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Highlight active policy in sidebar on scroll
+    const sections = document.querySelectorAll('.policy-section');
+    const navLinks = document.querySelectorAll('.policies-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
