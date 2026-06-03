@@ -69,7 +69,7 @@ async function loadTopCoaches() {
   try {
     const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js');
     const { getAnalytics } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js');
-    const { getFirestore, collection, query, orderBy, limit, getDocs } =
+    const { getFirestore, collection, query, where, limit, getDocs } =
       await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js');
 
     const app = initializeApp(firebaseConfig, 'ballmecca-web');
@@ -78,7 +78,7 @@ async function loadTopCoaches() {
 
     const q = query(
       collection(db, 'coaches'),
-      orderBy('years_pc', 'desc'),
+      where('featureCoach', '==', 'yes'),
       limit(5)
     );
 
@@ -112,22 +112,17 @@ function renderCoachCards(container, coaches) {
   }
 
   container.innerHTML = coaches.map(c => {
-    const photo = c.photoUrl || c.photoURL || c.profileImageUrl || c.photo || '';
-    const name = c.displayName || c.name || c.fullName || 'Coach';
+    const name = `${c.first_name} ${c.last_name}`.trim();
+    const photo = c.photoURL || '';
     const photoHtml = photo
       ? `<img src="${photo}" alt="${name}" loading="lazy">`
       : `<div class="coach-placeholder">${name[0]}</div>`;
-    const sport = Array.isArray(c.sports) && c.sports.length ? c.sports.join(', ') : (c.sport || 'Multi-sport');
-    const location = c.location || c.city || '';
-    const years = c.years_pc;
     return `
       <div class="coach-card reveal">
         <div class="coach-photo">${photoHtml}</div>
         <div class="coach-info">
-          <div class="coach-sport">${sport}</div>
+          <div class="coach-sport">${c.sport || 'Multi-sport'}</div>
           <h3 class="coach-name">${name}</h3>
-          ${years > 0 ? `<div class="coach-stars">${years} yr${years !== 1 ? 's' : ''} experience</div>` : ''}
-          ${location ? `<div class="coach-location">📍 ${location}</div>` : ''}
           <a href="https://apps.apple.com/us/app/ballmecca/id1663498139"
              class="btn btn-outline-cyan coach-btn" target="_blank">
             View in App
