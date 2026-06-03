@@ -111,18 +111,19 @@ function renderCoachCards(container, coaches) {
     return;
   }
 
-  container.innerHTML = coaches.map(c => {
+  container.innerHTML = coaches.map((c, i) => {
     const name = `${c.first_name} ${c.last_name}`.trim();
     const photo = c.photoURL || '';
     const photoHtml = photo
       ? `<img src="${photo}" alt="${name}" loading="lazy">`
       : `<div class="coach-placeholder">${name[0]}</div>`;
     return `
-      <div class="coach-card reveal">
+      <div class="coach-card reveal" style="transition-delay:${i * 0.1}s">
         <div class="coach-photo">${photoHtml}</div>
         <div class="coach-info">
           <div class="coach-sport">${c.sport || 'Multi-sport'}</div>
           <h3 class="coach-name">${name}</h3>
+          ${c.years_pc > 0 ? `<div class="coach-stars">${c.years_pc} yr${c.years_pc !== 1 ? 's' : ''} experience</div>` : ''}
           <a href="https://apps.apple.com/us/app/ballmecca/id1663498139"
              class="btn btn-outline-cyan coach-btn" target="_blank">
             View in App
