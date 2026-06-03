@@ -77,8 +77,8 @@ async function loadTopCoaches() {
     const db = getFirestore(app);
 
     const q = query(
-      collection(db, 'coachProfiles'),
-      orderBy('rating', 'desc'),
+      collection(db, 'coaches'),
+      orderBy('years_pc', 'desc'),
       limit(5)
     );
 
@@ -112,19 +112,22 @@ function renderCoachCards(container, coaches) {
   }
 
   container.innerHTML = coaches.map(c => {
-    const photoHtml = c.photoUrl
-      ? `<img src="${c.photoUrl}" alt="${c.displayName || 'Coach'}" loading="lazy">`
-      : `<div class="coach-placeholder">${(c.displayName || '?')[0]}</div>`;
-    const stars = '★'.repeat(Math.round(c.rating || 0)) + '☆'.repeat(5 - Math.round(c.rating || 0));
+    const photo = c.photoUrl || c.photoURL || c.profileImageUrl || c.photo || '';
+    const name = c.displayName || c.name || c.fullName || 'Coach';
+    const photoHtml = photo
+      ? `<img src="${photo}" alt="${name}" loading="lazy">`
+      : `<div class="coach-placeholder">${name[0]}</div>`;
     const sport = Array.isArray(c.sports) && c.sports.length ? c.sports.join(', ') : (c.sport || 'Multi-sport');
+    const location = c.location || c.city || '';
+    const years = c.years_pc;
     return `
       <div class="coach-card reveal">
         <div class="coach-photo">${photoHtml}</div>
         <div class="coach-info">
           <div class="coach-sport">${sport}</div>
-          <h3 class="coach-name">${c.displayName || 'Coach'}</h3>
-          ${c.rating > 0 ? `<div class="coach-stars">${stars} <span>${c.rating.toFixed(1)}</span></div>` : ''}
-          ${c.location ? `<div class="coach-location">📍 ${c.location}</div>` : ''}
+          <h3 class="coach-name">${name}</h3>
+          ${years > 0 ? `<div class="coach-stars">${years} yr${years !== 1 ? 's' : ''} experience</div>` : ''}
+          ${location ? `<div class="coach-location">📍 ${location}</div>` : ''}
           <a href="https://apps.apple.com/us/app/ballmecca/id1663498139"
              class="btn btn-outline-cyan coach-btn" target="_blank">
             View in App
