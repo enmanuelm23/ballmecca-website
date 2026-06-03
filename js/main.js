@@ -78,7 +78,7 @@ async function loadTopCoaches() {
 
     const q = query(
       collection(db, 'coaches'),
-      where('featureCoach', '==', 'yes'),
+      where('featuredCoach', '==', 'yes'),
       limit(5)
     );
 
