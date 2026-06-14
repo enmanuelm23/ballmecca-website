@@ -1,6 +1,6 @@
 # Ballmecca Website Redesign — Design Spec
 
-**Date:** 2026-06-13
+**Date:** 2026-06-13 (rev. 2026-06-14 after design review)
 **Status:** Approved design, pending implementation plan
 **Repo:** `Documents/ballmecca-website` (GitHub: `enmanuelm23/ballmecca-website`)
 
@@ -13,207 +13,272 @@ and SEO-strong, and migrate hosting from Squarespace/Vercel to **Firebase Hostin
 
 The defining new experience: a **persona-aware home page** that lets visitors
 self-identify as **Athlete, Coach, or Recruiter** and routes them to a tailored
-landing page — without ever gating the primary action (downloading the app).
+landing page — without ever gating the primary action.
+
+### Conversion goal per persona
+- **Athletes & Coaches** → download the app (App Store / Google Play).
+- **Recruiters** → **join early access** (email capture), since recruiter features
+  are partial; app download is a secondary action only.
 
 ### Success criteria
-- A first-time visitor understands what Ballmecca is and can download the app
+- A first-time visitor understands what Ballmecca is and can act (download)
   **without scrolling or choosing a persona**.
 - A visitor who self-identifies reaches a relevant, trust-building page that
-  funnels to download.
+  funnels to the right action.
 - Each persona page is independently indexable and ranks for its own keywords.
-- The site visually matches the Flutter app's brand (`ballmecca4`).
-- Lighthouse: 95+ Performance / 100 SEO / 100 Accessibility on the home page.
-- Hosting runs on Firebase with auto-deploy from `main`; Squarespace and Vercel
-  are retired after DNS cutover.
+- The site visually matches the Flutter app's brand (`ballmecca4`), dark theme.
+- **Lighthouse (mobile throttling): 95+ Performance / 100 SEO / 100 Accessibility**
+  on home + persona pages, enforced by the performance budget in §8.
+- Hosting runs on Firebase with auto-deploy from `main`; Squarespace and Vercel are
+  retired only after a verified rollback-safe cutover (§11).
 
 ---
 
 ## 2. Stack & Architecture
 
 **Astro** (static output) → **Firebase Hosting**. Astro ships zero JS by default,
-emits plain static HTML/CSS (ideal for SEO + Lighthouse), and gives us component
-reuse, MDX-based blogging, and a built-in sitemap. A small Node build step is the
-only cost; the maintainability and SEO wins are large.
+emits plain static HTML/CSS, and gives us component reuse, MDX blogging, and a
+built-in sitemap. The site uses **no client-side Firebase SDK** (see §7).
 
 ```
 ballmecca-website/
 ├── src/
 │   ├── layouts/
 │   │   ├── BaseLayout.astro        # <head>, SEO meta, nav, footer, skip-link
-│   │   └── PersonaLayout.astro     # BaseLayout + corner persona toggle
+│   │   └── PersonaLayout.astro     # BaseLayout + in-content persona switcher
 │   ├── components/
-│   │   ├── Nav.astro  Footer.astro  PersonaToggle.astro
+│   │   ├── Nav.astro  Footer.astro  PersonaSwitcher.astro
 │   │   ├── Hero.astro  PersonaSelector.astro  StatBar.astro
 │   │   ├── HowItWorks.astro  SportsCarousel.astro  MissionStrip.astro
 │   │   ├── DownloadCTA.astro  StoreBadges.astro  FaqAccordion.astro
-│   │   └── TopCoaches.astro        # client-hydrated Firestore island
+│   │   ├── TopCoaches.astro        # STATIC — renders from data/coaches.ts
+│   │   └── EarlyAccessForm.astro   # recruiter email capture
 │   ├── pages/
 │   │   ├── index.astro             # persona-aware home (Option B)
-│   │   ├── athletes.astro          # persona landing (long-form)
-│   │   ├── coaches.astro           # persona landing (long-form)
-│   │   ├── recruiters.astro        # persona landing (early-access)
+│   │   ├── athletes.astro  coaches.astro  recruiters.astro
 │   │   ├── about.astro  contact.astro  faq.astro  policies.astro
-│   │   └── blog/
-│   │       ├── index.astro         # article list
-│   │       └── [...slug].astro     # article pages from content collection
-│   ├── content/
-│   │   ├── config.ts               # blog collection schema (zod)
-│   │   └── blog/*.mdx              # articles (seeded with first article)
-│   ├── data/
-│   │   ├── personas.ts             # per-persona copy, benefits, CTAs, SEO
-│   │   ├── sports.ts  faqs.ts  seo.ts
-│   ├── lib/persona.ts              # localStorage read/write + highlight logic
-│   └── styles/
-│       ├── tokens.css              # app theme tokens (CSS custom properties)
-│       └── global.css
-├── public/                         # images/, favicon, robots.txt, app store assets
+│   │   └── blog/{index.astro, [...slug].astro}
+│   ├── content/{config.ts, blog/*.mdx}   # blog collection (seeded w/ 1st article)
+│   ├── data/{personas.ts, sports.ts, faqs.ts, seo.ts, coaches.ts}
+│   ├── lib/persona.ts              # localStorage read/write + highlight (tiny, deferred)
+│   └── styles/{tokens.css, global.css}
+├── public/                         # images/ (incl. images/coaches/), favicon, robots.txt
 ├── astro.config.mjs                # site URL + @astrojs/sitemap + @astrojs/mdx
 ├── firebase.json  .firebaserc
 └── .github/workflows/deploy.yml    # build + deploy to Firebase on push to main
 ```
 
 Nav, footer, `<head>`, and SEO meta live in **one** `BaseLayout` — eliminating the
-current 8-file copy-paste. Sports, FAQs, and persona copy are typed data files so
-they render consistently across home, persona pages, and the footer.
+current 8-file copy-paste. Sports, FAQs, persona copy, and the curated coach list
+are typed data files so they render consistently everywhere.
 
 ---
 
-## 3. Brand & Theme (mirror the app)
+## 3. Brand & Theme (mirror the app — dark only)
 
-`src/styles/tokens.css` ports `ballmecca4`'s `AppColors` exactly into CSS custom
-properties, with light/dark via `prefers-color-scheme` + a manual toggle.
+The site ships a **single dark theme** matching the app's default. No light mode,
+no manual theme toggle (deliberate YAGNI cut: removes FOUC handling, storage,
+SVG/OG variants). `src/styles/tokens.css` ports `ballmecca4`'s dark `AppColors`
+into CSS custom properties.
 
 | Token | Value | Use |
 |---|---|---|
 | `--brand-chrome` | `#06466A` | nav, headers, branded chrome |
 | `--primary-action` | `#F35E0A` | CTAs, primary buttons |
 | `--link` | `#08B4B6` | links, accents, focus rings |
-| `--canvas` (dark) | `#000000` | page background |
-| `--canvas` (light) | `#FAFAFA` | page background |
-| `--surface` (dark/light) | `#22222E` / `#F1F3F5` | cards |
-| `--surface-variant` | `#18181E` / `#DEE2E6` | nested cards |
-| `--border` | `#1F1F2A` / `#E9ECEF` | dividers |
-| `--on-surface` | `#FAFAFA` / `#1A1A2E` | primary text |
-| `--on-surface-variant` | `#B0BEC5` / `#6B7280` | secondary text |
+| `--canvas` | `#000000` | page background |
+| `--surface` | `#22222E` | cards |
+| `--surface-variant` | `#18181E` | nested cards |
+| `--border` | `#1F1F2A` | dividers |
+| `--on-surface` | `#FAFAFA` | primary text |
+| `--on-surface-variant` | `#B0BEC5` | secondary text |
 | `--success` / `--warning` / `--danger` | `#068742` / `#F83502` / `#A7040E` | status |
-| on-fixed | `--on-brand-chrome` / `--on-primary-action` / `--on-link` = `#FFFFFF` | text on colored bg |
+| `--on-brand-chrome` / `--on-primary-action` / `--on-link` | `#FFFFFF` | text on colored bg |
+| `--muted` | `#95A1AC` | placeholders/icons |
 
-**Typography:** **Anton** for display headlines (hero + section titles, uppercase),
-**Open Sans** for sub-headings/labels, **Nunito** for body and UI — matching the app
-(Open Sans + Nunito) while giving the hero athletic energy. Self-host the fonts in
-`public/fonts/` with `font-display:swap` for performance and privacy.
+Include `<meta name="color-scheme" content="dark">`.
+
+**Typography:** **Anton** for short display headlines only (hero + section titles,
+uppercase) — never paragraphs, FAQ questions, nav, or long multi-line mobile
+headings. **Open Sans** for sub-headings/labels, **Nunito** for body/UI — matching
+the app. Fonts self-hosted in `public/fonts/`, subsetted, limited weights,
+`font-display:swap`.
+
+**Token-drift rule:** `lib/theme/app_colors.dart` in `ballmecca4` is the source of
+truth. Never change a brand hex in `tokens.css` without checking the app token.
 
 This replaces the current off-brand palette (`#0a0e1a` / `#e84e1b` / `#00c9b1`,
-League Spartan / DM Sans), which does **not** match the app.
+League Spartan / DM Sans), which does not match the app.
 
 ---
 
 ## 4. Persona Experience (Option B, refined)
 
-### Home page (`index.astro`) — value first, persona second
-1. **Hero** — one-line value prop (*"Revolutionizing sports education for the next
-   generation."*) + sub-line + **App Store / Google Play badges as the primary
-   action**. A ready-to-convert visitor downloads here with no scroll, no choice.
-2. **Persona selector** — directly beneath the hero: *"Find the tour built for
-   you"* → three cards: **I'm an Athlete / I'm a Coach / I'm a Recruiter**.
-   This is a helpful guide, **not a gate**.
-3. **Shared story** below: stat bar, how-it-works, sports carousel, top coaches,
+### Home page — value first, persona second
+1. **Hero** — value prop + sub-line + **store badges as the primary action**. A
+   ready-to-convert visitor acts here with no scroll, no choice.
+2. **Persona selector** — directly beneath: *"Find the tour built for you"* → three
+   **real anchor links** (`<a href="/athletes">` …), crawlable + keyboard-accessible
+   with zero JS. A guide, **not a gate**.
+3. **Shared story**: stat bar, how-it-works, sports carousel, top coaches (static),
    mission strip, blog teaser, download CTA, footer.
 
-The persona selector is built as **real anchor links** (`<a href="/athletes">`),
-crawlable and keyboard-accessible with zero JS. JS only adds the "remember +
-pre-highlight" enhancement on top.
+### Persona pages — long-form, disciplined, genuinely distinct
+Same spine, **distinct content per page** (different hero promise, objections, FAQ
+entries, proof, and schema — never reskinned nouns):
 
-### Persona pages — long-form, disciplined (`/athletes`, `/coaches`, `/recruiters`)
-Each uses `PersonaLayout` and follows the same spine, with **genuinely distinct
-content** (no reskins):
+`Hero (CTA up top) → How it works → Why <persona> → Proof → Testimonial →
+Model/Pricing → Persona FAQ slice (links to full FAQ) → Final CTA`
 
-`Hero (with download CTA up top) → How it works → Why <persona> → Sports/Proof →
-Testimonial → Pricing/Model → Persona FAQ slice (links to full FAQ) → Final CTA + badges`
+- **Athletes** — improve faster, pro feedback in days, affordable, safe for minors.
+  CTA: download.
+- **Coaches** — earn money, build your roster, Stripe payouts, referrals/
+  subscriptions. CTA: download.
+- **Recruiters** — discover verified talent, **early access**. Honest positioning:
+  "early access" prominent, no implied mature recruiter dashboard. Primary CTA:
+  **email capture** (`EarlyAccessForm`); download secondary. Still needs real value
+  for SEO: market thesis, discovery workflow, verification philosophy, sport
+  coverage, honest roadmap.
 
-- **Athletes** — *improve faster, pro feedback in days, affordable, safe for minors.*
-- **Coaches** — *earn money, build your roster, get paid via Stripe, referral &
-  subscription model.*
-- **Recruiters** — *discover verified talent (early access).* Sells the vision
-  honestly since the feature is partial; CTA = download to be among the first.
-
-"Disciplined" = long enough to answer real questions and earn SEO, but the
-download CTA sits in the hero so converters never scroll.
-
-### Persona toggle
-- A small fixed-corner toggle (Athlete / Coach / Recruiter) appears **only on
-  persona pages** — it is a "switch context" control, absent from the neutral home
-  where the hero already handles the choice.
-- Selection persists to `localStorage`.
-- On a return visit to `/`, the home persona selector **pre-highlights** the saved
-  persona. **No auto-redirect** — landing on `/` always shows the home page (keeps
-  shareable links, back-button, and shared-device behavior intuitive).
+### Persona switcher (the corner toggle)
+- Appears **only on persona pages** (not the neutral home). Built as accessible
+  links/segmented control: real labels, visible focus states, ~44px touch targets,
+  clear current-persona indication, sufficient contrast.
+- On small screens it is **sticky within content**, not fixed-overlay, to avoid
+  covering content or clashing with browser/chat UI.
+- Selection persists to `localStorage`; on a return visit to `/`, the home selector
+  **pre-highlights** the saved persona. **No auto-redirect** — `/` always shows home.
 
 ---
 
 ## 5. Blog / Articles (`/blog`)
 
-Minimal Astro **content collection** (MDX). `blog/index.astro` lists articles
-(title, date, excerpt, hero image); `blog/[...slug].astro` renders each with
-`Article` JSON-LD, OG tags, and a canonical URL. Seeded with the first article the
-user provides. This is the long-term SEO engine; structure is in place now,
-content grows over time.
+Minimal Astro **content collection** (MDX). `index.astro` lists articles;
+`[...slug].astro` renders each with `Article` JSON-LD, OG tags, canonical URL.
+Seeded with the first article the user provides. File-based, no CMS until volume
+justifies one. This is the long-term SEO engine.
 
 ---
 
 ## 6. SEO
 
-- Per-page `<title>`, meta description, and canonical (centralized in `seo.ts` +
+- Per-page `<title>`, meta description, canonical (centralized in `seo.ts` +
   `BaseLayout`).
 - Open Graph + Twitter Card tags; per-page OG images.
-- **JSON-LD structured data:** `Organization` (logo, social profiles) site-wide;
-  `MobileApplication` (name, OS, store URLs, real aggregate rating) on home;
-  `Article` on blog posts; `FAQPage` on the FAQ page.
-  - **Honesty guardrail:** rating/review counts must reflect **real** App Store /
-    Play aggregates — never fabricated. Fabricated ratings risk Google penalties
-    and are dishonest.
-- Auto-generated `sitemap.xml` (`@astrojs/sitemap`) + hand-authored `robots.txt`.
-- Semantic heading hierarchy (one `<h1>` per page), descriptive alt text.
-- Responsive, lazy-loaded images via Astro's `<Image>`; self-hosted fonts.
-- Each persona page targets its own keyword cluster (e.g. *"online sports coaching
-  for athletes"*, *"grow your coaching business"*, *"discover athlete talent"*).
+- **JSON-LD:** `Organization` site-wide; `MobileApplication` on home; `Article` on
+  posts; `FAQPage` on FAQ.
+  - **Honesty guardrail:** rating/review counts must reflect **real** store
+    aggregates — never fabricated.
+- Auto `sitemap.xml` (`@astrojs/sitemap`) + hand-authored `robots.txt`.
+- One `<h1>` per page, semantic hierarchy, descriptive alt text.
+- Responsive lazy images via Astro `<Image>`; self-hosted subsetted fonts.
+- Per-persona keyword clusters (e.g. *online sports coaching for athletes*, *grow
+  your coaching business*, *discover athlete talent*).
+- **Caveat (acknowledged):** architecture is necessary, not sufficient — ranking
+  depends on real, specific content and proof, which marketing supplies.
 
 ---
 
-## 7. Live Coaches (Firestore)
+## 7. Top Coaches — fully static (no Firebase read)
 
-Port the existing read-only Firestore "top coaches" query into a **client-hydrated
-Astro island** (`TopCoaches.astro` + a small script) so it stays dynamic without
-blocking the static build or the hero's load. **Lazy/deferred** load so it never
-hurts mobile LCP. Same graceful placeholder fallback as today. Reuses the existing
-public web Firebase config (read-only; security enforced by Firestore rules).
+**Decision:** the site performs **no Firestore read**. The existing live query
+fails anyway — `firestore.rules:150` requires `request.auth != null` for `coaches`,
+so the unauthenticated marketing query already falls back to placeholder data in
+production. Loosening that rule would risk leaking private coach fields.
+
+Instead, a **curated set of real coaches** (name, sport, photo, optional real
+credential) is hardcoded in `src/data/coaches.ts`, with images stored in
+`public/images/coaches/`. `TopCoaches.astro` renders them at **build time** —
+static HTML, zero client JS, zero Firebase SDK, no privacy surface. Updating the
+lineup is a data-file + image edit. (Future option: a build-time admin-SDK export
+into a sanitized `publicCoaches` set — out of scope now.)
 
 ---
 
-## 8. Firebase Hosting Migration
+## 8. Performance Budget & Interactivity Classification
 
-- `firebase.json` hosting target serving Astro's `dist/`, with clean-URL rewrites
-  and long-cache headers for hashed assets.
-- `.github/workflows/deploy.yml`: on push to `main`, build Astro and deploy to
-  Firebase Hosting (same auto-deploy DX as Vercel). PRs deploy to **preview
-  channels** for review.
-- **Cutover:** deploy to Firebase → verify on the `*.web.app` URL → repoint
-  `ballmecca.com` + `www` DNS to Firebase → **retire the Vercel project and the
-  Squarespace site**.
+Targets enforced on **mobile throttling**, not desktop. No client Firebase SDK in
+any path. Per-component JS policy:
+
+| Feature | Implementation | Client JS |
+|---|---|---|
+| Mobile nav | vanilla, deferred | tiny |
+| Persona highlight/persist | `lib/persona.ts`, deferred | tiny |
+| Persona switcher | accessible links | none (JS only enhances) |
+| FAQ | native `<details>/<summary>` | none |
+| Sports carousel | CSS `scroll-snap` | none |
+| Top coaches | static (§7) | none |
+| Theme | dark-only CSS | none |
+| Recruiter form | `EarlyAccessForm` (see §9) | minimal |
+| Analytics | lightweight (§10) | minimal |
+
+Budget: near-zero critical-path JS; fonts subsetted + limited weights; all
+above-the-fold images sized + compressed (preload only the hero); no carousel
+library; avoid layout shift (sized images, `font-display:swap`).
+
+---
+
+## 9. Forms
+
+- **Contact** — preserve the existing Formspree integration, re-themed; load any
+  script lazily so it stays off the critical path.
+- **Recruiter early access** — `EarlyAccessForm` captures email (Formspree or a
+  Firebase-backed endpoint — decided in the implementation plan). Confirmation
+  state, honest "early access" copy, spam honeypot.
+
+---
+
+## 10. Analytics & Conversion Events
+
+Define a lightweight analytics layer (platform chosen in the plan; must respect the
+JS budget). Events:
+
+- Store-badge click (App Store / Google Play, separately)
+- Persona card click; persona switcher click
+- FAQ expand
+- Contact submit; recruiter early-access submit
+- Blog CTA click; top-coach card click
+
+Dimensions: persona selected, page, source/medium, device. Without this the
+redesign can look good but teach us nothing.
+
+---
+
+## 11. Firebase Hosting Migration (rollback-safe)
+
+- `firebase.json` hosting target serving `dist/`, clean-URL rewrites, long-cache
+  headers for hashed assets.
+- `.github/workflows/deploy.yml`: build + deploy to Firebase on push to `main`;
+  PRs → **preview channels**.
+- **Redirect map (built before launch):** old `*.html` → clean URLs with `301`
+  (`/about.html`→`/about`, etc.), plus an inventory of existing Squarespace slugs →
+  new URLs. Losing indexed URLs costs SEO momentum.
+- **Cutover sequence:** build preview → verify all pages, forms, analytics,
+  redirects, robots/sitemap, canonical host → **lower DNS TTL** → cut DNS to
+  Firebase → monitor logs + Search Console → keep Squarespace/Vercel live as
+  rollback through a confidence window → **retire only after** that window.
 - Marketing site stays separate from the Flutter app at `app.ballmecca.com`.
 
 ---
 
-## 9. Out of Scope (YAGNI)
-- No CMS — blog is file-based MDX until volume justifies otherwise.
-- No i18n, no auth, no e-commerce on the marketing site.
-- No redesign of the Flutter app or `app.ballmecca.com`.
-- Recruiter product features themselves (page sells the existing/early capability).
+## 12. Open Questions for the Implementation Plan
+Exact App Store / Play URLs (confirmed live: `id1663498139`,
+`com.ballmecca.ballmecca`); current DNS records + registrar; Firebase project +
+hosting target (`ballmecca-982c8`?); GitHub deploy secret ownership; analytics
+platform; Squarespace URL inventory for the redirect map; which coaches to curate
+for §7; the first blog article.
 
 ---
 
-## 10. Migration of Existing Content
-Port and re-theme existing pages: About, Contact (Formspree form preserved), FAQ
-(accordion → `FaqAccordion` + `FAQPage` JSON-LD), Policies (sticky-sidebar layout +
-placeholder slots preserved). Remove the committed macOS artifacts (`Icon\r`,
-`.DS_Store`) and add them to `.gitignore` as part of the rebuild.
+## 13. Out of Scope (YAGNI)
+No CMS; no light mode / theme toggle; no i18n/auth/e-commerce; no client Firebase
+SDK; no redesign of the Flutter app or `app.ballmecca.com`; no recruiter product
+features (page sells existing/early capability).
+
+---
+
+## 14. Migration of Existing Content
+Port + re-theme About, Contact (Formspree preserved), FAQ (accordion → native
+`<details>` + `FAQPage` JSON-LD), Policies (sticky-sidebar + placeholder slots
+preserved). Remove committed macOS artifacts (`Icon\r`, `.DS_Store`) and gitignore
+them as part of the rebuild.
