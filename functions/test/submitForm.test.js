@@ -18,6 +18,16 @@ describe('submitForm.validate', () => {
   test('contact without message rejected', () => {
     expect(validate({ formType:'contact', email:'a@b.com', name:'A' }).errors).toContain('message');
   });
+  test('contact without name rejected', () => {
+    expect(validate({ formType:'contact', email:'a@b.com', message:'Hi' }).errors).toContain('name');
+  });
+  test('whitespace-only name rejected (trim guard)', () => {
+    expect(validate({ formType:'contact', email:'a@b.com', name:'   ', message:'Hi' }).errors).toContain('name');
+  });
+  test('null/garbage body rejected without throwing', () => {
+    expect(validate(null).ok).toBe(false);
+    expect(validate(undefined).ok).toBe(false);
+  });
   test('honeypot flagged as spam', () => {
     expect(validate({ formType:'earlyAccess', email:'a@b.com', company_website:'x' }).errors).toContain('spam');
   });

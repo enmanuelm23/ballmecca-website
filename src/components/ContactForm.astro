@@ -37,7 +37,8 @@ const subjects = ['Coach joining the platform','Athlete looking for coaching','P
     if (btn) btn.disabled = true; // prevent double-submit / duplicate POSTs
     setStatus('Sending…');
     try {
-      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{ Accept:'application/json' } });
+      // Send as urlencoded (not multipart) so the Cloud Function's body parser reads it.
+      const res = await fetch(form.action, { method:'POST', body:new URLSearchParams(new FormData(form) as any), headers:{ Accept:'application/json' } });
       setStatus(res.ok ? 'Thanks — we\'ll be in touch shortly.' : 'Something went wrong. Email support@ballmecca.com.');
       if (res.ok) form.reset();
     } catch {

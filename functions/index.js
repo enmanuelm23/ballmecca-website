@@ -8,6 +8,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Pure validator — unit-tested in test/submitForm.test.js
 function validate(body) {
+  if (!body || typeof body !== 'object') {
+    return { ok: false, errors: ['body'], collection: undefined };
+  }
   const errors = [];
   const formType = String(body.formType || '');
   if (!TYPES[formType]) errors.push('formType');
@@ -25,11 +28,16 @@ const submitForm = onRequest({ cors: ALLOWED_ORIGIN, region: 'us-central1' }, as
   const body = req.body && Object.keys(req.body).length ? req.body : Object.fromEntries(new URLSearchParams(req.rawBody?.toString() || ''));
   const result = validate(body);
   if (!result.ok) return res.status(result.errors.includes('spam') ? 200 : 400).json({ ok: result.errors.includes('spam') });
-  await admin.firestore().collection(result.collection).add({
-    email: body.email, name: body.name || null, subject: body.subject || null,
-    message: body.message || null, createdAt: admin.firestore.FieldValue.serverTimestamp(),
-    source: 'website',
-  });
+  try {
+    await admin.firestore().collection(result.collection).add({
+      email: body.email, name: body.name || null, subject: body.subject || null,
+      message: body.message || null, createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      source: 'website',
+    });
+  } catch (err) {
+    console.error('submitForm: Firestore write failed', err);
+    return res.status(500).json({ ok: false });
+  }
   // Email notification is wired in the implementation (e.g. via an extension or nodemailer) per §12.
   return res.status(200).json({ ok: true });
 });
