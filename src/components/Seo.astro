@@ -16,7 +16,10 @@ if (!path.startsWith('/')) throw new Error(`Seo: path must start with "/" — go
 if (!ogImage.startsWith('/') && !ogImage.startsWith('http')) {
   throw new Error(`Seo: ogImage must be root-relative or absolute — got "${ogImage}"`);
 }
-const canonical = new URL(path, site.url).href;
+// Ensure canonical matches the trailing-slash URLs emitted by @astrojs/sitemap.
+// Home (/) already ends with slash; all other paths get one appended.
+const canonicalPath = path === '/' ? path : (path.endsWith('/') ? path : path + '/');
+const canonical = new URL(canonicalPath, site.url).href;
 const ogAbs = new URL(ogImage, site.url).href;
 const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} | ${site.name}`;
 ---
