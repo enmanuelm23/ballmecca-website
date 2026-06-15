@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting
+name: Deploy to Firebase
 on:
   push:
     branches: [main]
@@ -14,10 +14,27 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
-      - name: Deploy (preview on PR, live on main)
+      # Cloud Function validator tests (separate package; its lockfile is
+      # intentionally gitignored, so use `npm install` here, not `npm ci`).
+      - name: Test Cloud Function
+        run: |
+          cd functions && npm ci
+          cd test && npm install && npm test
+      # Hosting: preview channel on PRs, live channel on push to main.
+      - name: Deploy Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: ballmecca-982c8
           channelId: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'live' }}
+      # Functions: deploy ONLY on push to main (the /api/submitForm rewrite
+      # depends on this function; action-hosting-deploy does not deploy it).
+      - name: Deploy Functions
+        if: github.event_name == 'push'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          npx --yes firebase-tools@13 deploy --only functions --project ballmecca-982c8 --non-interactive
