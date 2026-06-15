@@ -1,0 +1,35 @@
+/* Brand tokens — mirror of ballmecca4 lib/theme/app_colors.dart (dark preset).
+   Source of truth is the Dart file; do not change a hex without checking it. */
+:root {
+  color-scheme: dark;
+
+  --brand-chrome: #06466A;
+  --primary-action: #F35E0A;
+  --link: #08B4B6;
+
+  --canvas: #000000;
+  --surface: #22222E;
+  --surface-variant: #18181E;
+  --border: #1F1F2A;
+
+  --on-surface: #FAFAFA;
+  --on-surface-variant: #B0BEC5;
+  --muted: #95A1AC;
+
+  --success: #068742;
+  --warning: #F83502;
+  --danger: #A7040E;
+
+  --on-brand-chrome: #FFFFFF;
+  --on-primary-action: #FFFFFF;
+  --on-link: #FFFFFF;
+
+  --font-display: 'Anton', system-ui, sans-serif;
+  --font-heading: 'Open Sans', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  --maxw: 1160px;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px;
+  --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px;
+  --space-5: 32px; --space-6: 48px; --space-7: 64px; --space-8: 96px;
+}
