@@ -1,0 +1,31 @@
+---
+import { personas } from '../data/personas';
+import type { PersonaKey } from '../data/personas';
+interface Props { active: PersonaKey }
+const { active } = Astro.props;
+---
+<nav class="switcher" aria-label="Choose your persona">
+  <span class="switcher-label">I'm a…</span>
+  <ul>
+    {personas.map((p) => (
+      <li><a href={p.href} aria-current={p.key === active ? 'true' : undefined}
+             data-persona={p.key} data-event="persona_switch" data-source={active}>{p.noun}</a></li>
+    ))}
+  </ul>
+</nav>
+<style>
+  .switcher { position:sticky; top:64px; z-index:50; display:flex; align-items:center; gap:12px;
+    background:var(--surface); border-bottom:1px solid var(--border); padding:10px 16px; }
+  .switcher-label { color:var(--on-surface-variant); font-size:14px; }
+  .switcher ul { display:flex; gap:8px; list-style:none; margin:0; padding:0; }
+  .switcher a { display:inline-block; padding:8px 16px; min-height:40px; border-radius:999px;
+    border:1px solid var(--border); color:var(--on-surface); font-weight:700; font-size:14px; }
+  .switcher a:hover { text-decoration:none; border-color:var(--link); }
+  .switcher a[aria-current='true'] { background:var(--link); color:var(--on-link); border-color:var(--link); }
+</style>
+<script>
+  import { setPersona } from '../lib/persona';
+  document.querySelectorAll('.switcher a[data-persona]').forEach((a) => {
+    a.addEventListener('click', () => setPersona(a.getAttribute('data-persona') as any));
+  });
+</script>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PersonaSwitcher from '../components/PersonaSwitcher.astro';
+import type { PersonaKey } from '../data/personas';
+interface Props { title: string; description?: string; path: string; active: PersonaKey }
+const { title, description, path, active } = Astro.props;
+---
+<BaseLayout title={title} description={description} path={path}>
+  <slot name="head" slot="head" />
+  <PersonaSwitcher active={active} />
+  <div id="persona-root" data-active={active} hidden></div>
+  <slot />
+</BaseLayout>
+<script>
+  // Persist the active persona on load so landing directly on a persona page
+  // remembers the choice (home selector pre-highlights it on next visit).
+  import { setPersona } from '../lib/persona';
+  import type { PersonaKey } from '../data/personas';
+  const active = document.getElementById('persona-root')?.dataset.active as PersonaKey | undefined;
+  if (active) setPersona(active);
+</script>
