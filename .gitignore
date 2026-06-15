@@ -8,4 +8,5 @@ dist/
 firebase-debug.log
 functions/node_modules/
 functions/test/node_modules/
+functions/test/package-lock.json
 node_modules/
