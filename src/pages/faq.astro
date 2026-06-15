@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Faq from '../components/Faq.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { faqCategories } from '../data/faqs';
+const all = faqCategories.flatMap((c) => c.items);
+const faqSchema = { '@context':'https://schema.org','@type':'FAQPage',
+  mainEntity: all.map((f) => ({ '@type':'Question', name:f.q, acceptedAnswer:{ '@type':'Answer', text:f.a.replace(/<[^>]+>/g,'') } })) };
+---
+<BaseLayout title="FAQ" description="Answers about how Ballmecca coaching works — for athletes, coaches, and parents." path="/faq">
+  <JsonLd slot="head" schema={faqSchema} />
+  <section class="container" style="padding:64px 0 8px;"><h1 class="display" style="font-size:48px;">Frequently asked questions.</h1></section>
+  {faqCategories.map((c) => <Faq title={c.title} items={c.items} />)}
+</BaseLayout>

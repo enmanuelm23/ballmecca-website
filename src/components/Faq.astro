@@ -1,0 +1,27 @@
+---
+interface Item { q: string; a: string }
+interface Props { title?: string; items: Item[]; seeAllLink?: boolean }
+const { title, items, seeAllLink = false } = Astro.props;
+---
+<section class="container faq-block">
+  {title && <h2 class="display faq-h">{title}</h2>}
+  <div class="faq-list">
+    {items.map((it) => (
+      <details class="faq-item">
+        <summary>{it.q}</summary>
+        <div class="faq-answer text-muted" set:html={it.a} />
+      </details>
+    ))}
+  </div>
+  {seeAllLink && <a class="text-accent" href="/faq">See all FAQs →</a>}
+</section>
+<style>
+  .faq-block { padding:48px 0; }
+  .faq-h { font-size:32px; margin-bottom:16px; }
+  .faq-item { border-bottom:1px solid var(--border); padding:14px 0; }
+  .faq-item summary { cursor:pointer; font-weight:700; font-family:var(--font-heading); list-style:none; }
+  .faq-item summary::-webkit-details-marker { display:none; }
+  .faq-item summary::after { content:'+'; float:right; color:var(--link); }
+  .faq-item[open] summary::after { content:'–'; }
+  .faq-answer { padding-top:10px; }
+</style>
