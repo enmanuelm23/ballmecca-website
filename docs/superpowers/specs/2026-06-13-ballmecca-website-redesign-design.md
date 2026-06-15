@@ -218,13 +218,23 @@ library; avoid layout shift (sized images, `font-display:swap`).
 
 ---
 
-## 9. Forms
+## 9. Forms — Firebase Cloud Function endpoint (no Formspree)
 
-- **Contact** — preserve the existing Formspree integration, re-themed; load any
-  script lazily so it stays off the critical path.
-- **Recruiter early access** — `EarlyAccessForm` captures email (Formspree or a
-  Firebase-backed endpoint — decided in the implementation plan). Confirmation
-  state, honest "early access" copy, spam honeypot.
+Both forms POST via `fetch` to a **Firebase Cloud Function HTTP endpoint** — no
+client Firebase SDK on the page, staying fully static/fast and entirely in the
+Firebase ecosystem. The function validates input, writes the submission to a
+Firestore collection (e.g. `contactMessages` / `earlyAccessSignups`), and/or emails
+`support@ballmecca.com`.
+
+- **Contact** — re-themed form (currently a non-functional Formspree placeholder —
+  `action="…/YOUR_FORM_ID"` — to be replaced).
+- **Recruiter early access** — `EarlyAccessForm` captures email with confirmation
+  state and honest "early access" copy.
+- **Cross-cutting:** server-side validation, CORS limited to the site origin, spam
+  protection (honeypot + reCAPTCHA/App Check), progressive-enhancement fallback
+  (`mailto:` shown if JS fails). Whether the function lives in the existing
+  `ballmecca4` `firebase/functions` codebase or a small dedicated one is decided in
+  the implementation plan.
 
 ---
 
@@ -266,7 +276,8 @@ Exact App Store / Play URLs (confirmed live: `id1663498139`,
 `com.ballmecca.ballmecca`); current DNS records + registrar; Firebase project +
 hosting target (`ballmecca-982c8`?); GitHub deploy secret ownership; analytics
 platform; Squarespace URL inventory for the redirect map; which coaches to curate
-for §7; the first blog article.
+for §7; the first blog article; where the §9 form Cloud Function lives (existing
+`firebase/functions` vs. dedicated) and its email-sending mechanism.
 
 ---
 
@@ -278,7 +289,8 @@ features (page sells existing/early capability).
 ---
 
 ## 14. Migration of Existing Content
-Port + re-theme About, Contact (Formspree preserved), FAQ (accordion → native
+Port + re-theme About, Contact (Formspree placeholder replaced by the §9 Cloud
+Function endpoint), FAQ (accordion → native
 `<details>` + `FAQPage` JSON-LD), Policies (sticky-sidebar + placeholder slots
 preserved). Remove committed macOS artifacts (`Icon\r`, `.DS_Store`) and gitignore
 them as part of the rebuild.
