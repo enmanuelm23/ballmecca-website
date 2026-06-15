@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Seo from '../components/Seo.astro';
+import { site } from '../data/site';
 interface Props {
   title: string; description?: string; path: string; ogImage?: string; noindex?: boolean;
   ogType?: 'website' | 'article'; publishedTime?: string;
@@ -18,6 +19,17 @@ const { title, description, path, ogImage, noindex, ogType, publishedTime } = As
   <link rel="preload" href="/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin />
   <Seo title={title} description={description} path={path} ogImage={ogImage} noindex={noindex} ogType={ogType} publishedTime={publishedTime} />
   <slot name="head" />
+  {site.ga4Id && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`} is:inline></script>
+      <script is:inline define:vars={{ id: site.ga4Id }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', id);
+      </script>
+    </>
+  )}
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>

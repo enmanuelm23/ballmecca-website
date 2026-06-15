@@ -2,7 +2,13 @@ export function send(event: string, params: Record<string, string> = {}) {
   if (typeof window === 'undefined') return;
   if (import.meta.env.DEV) console.debug('[analytics]', event, params);
   // @ts-expect-error optional global
-  window.dataLayer?.push({ event, ...params });
+  if (typeof window.gtag === 'function') {
+    // @ts-expect-error optional global
+    window.gtag('event', event, params);
+  } else {
+    // @ts-expect-error optional global
+    window.dataLayer?.push({ event, ...params });
+  }
 }
 
 let delegated = false;

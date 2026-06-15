@@ -12,4 +12,6 @@ export const site = {
     youtube: 'https://www.youtube.com/@ballmecca',
   },
   formEndpoint: '/api/submitForm',
+  // GA4 measurement id (e.g. 'G-XXXX'); empty disables analytics. Owner to provide (spec §12).
+  ga4Id: '',
 } as const;
