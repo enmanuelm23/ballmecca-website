@@ -1,1 +1,11 @@
+*.log
+.DS_Store
+.astro/
+.firebase/
 .superpowers/
+Icon?
+dist/
+firebase-debug.log
+functions/node_modules/
+functions/test/node_modules/
+node_modules/
