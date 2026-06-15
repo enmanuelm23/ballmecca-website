@@ -1,0 +1,20 @@
+---
+const img = '/images/acro.jpg';
+---
+<section class="mission"><div class="container mission-inner">
+  <div>
+    <p class="eyebrow text-warm">Our mission</p>
+    <h2 class="display mission-title">With the right guidance, anyone can achieve greatness.</h2>
+    <p class="text-muted">Too often, access to quality coaching is limited by zip code or income. Ballmecca is leveling the playing field — giving every kid a shot through mentorship, passion, and accountability.</p>
+    <a class="btn btn-primary" href="/about">Our story</a>
+  </div>
+  <img src={img} alt="A young athlete training with a coach" loading="lazy" width="560" height="420" />
+</div></section>
+<style>
+  .mission { background:var(--surface); border-block:1px solid var(--border); padding:72px 0; }
+  .mission-inner { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+  .mission-title { font-size:36px; margin:8px 0 16px; }
+  .mission img { border-radius:var(--radius-md); }
+  .eyebrow { text-transform:uppercase; letter-spacing:2px; font-size:13px; font-weight:700; }
+  @media (max-width:820px){ .mission-inner{ grid-template-columns:1fr; } }
+</style>

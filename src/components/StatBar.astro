@@ -1,0 +1,18 @@
+---
+const stats = [
+  { value: '68%', label: 'of youth coaches are unpaid volunteers', cls: 'text-warm' },
+  { value: '20+', label: 'sports covered', cls: 'text-accent' },
+  { value: '100%', label: 'verified coaches', cls: 'text-warm' },
+];
+---
+<section class="statbar"><div class="container statbar-inner">
+  {stats.map((s) => (
+    <div class="stat"><span class={`stat-value ${s.cls}`}>{s.value}</span><span class="text-muted">{s.label}</span></div>
+  ))}
+</div></section>
+<style>
+  .statbar { background:var(--surface); border-block:1px solid var(--border); }
+  .statbar-inner { display:flex; justify-content:space-around; gap:24px; padding:28px 0; text-align:center; flex-wrap:wrap; }
+  .stat { display:flex; flex-direction:column; gap:6px; }
+  .stat-value { font-family:var(--font-display); font-size:40px; }
+</style>

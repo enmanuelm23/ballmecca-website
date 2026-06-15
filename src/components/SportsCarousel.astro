@@ -1,0 +1,29 @@
+---
+import { sports } from '../data/sports';
+import { site } from '../data/site';
+---
+<section class="container sports">
+  <p class="eyebrow text-accent">On the platform</p>
+  <h2 class="display sports-title">Find coaching in your sport.</h2>
+  <div class="sports-track" role="list">
+    {sports.map((s) => (
+      <div class="sport" role="listitem">
+        <div class="sport-icon" aria-hidden="true">{s.icon}</div>
+        <div class="sport-name">{s.name}</div>
+        {s.comingSoon && <span class="soon">Coming soon</span>}
+      </div>
+    ))}
+  </div>
+  <a class="btn btn-outline" href={site.appStoreUrl} target="_blank" rel="noopener" data-event="store_click" data-store="app_store" data-source="sports">Get the app</a>
+</section>
+<style>
+  .sports { padding:40px 0 80px; }
+  .sports-title { font-size:40px; margin:8px 0 24px; }
+  .sports-track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:12px; }
+  .sport { scroll-snap-align:start; flex:0 0 140px; background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:24px; text-align:center; position:relative; }
+  .sport-icon { font-size:40px; }
+  .sport-name { margin-top:8px; font-weight:700; }
+  .soon { position:absolute; top:8px; right:8px; font-size:10px; background:var(--primary-action);
+    color:var(--on-primary-action); padding:2px 8px; border-radius:999px; }
+</style>
