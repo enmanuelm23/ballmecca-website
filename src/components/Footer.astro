@@ -1,0 +1,53 @@
+---
+import { site } from '../data/site';
+---
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="display footer-logo">Ballmecca</div>
+      <p class="text-muted">{site.tagline}</p>
+      <div class="footer-social">
+        <a href={site.social.instagram} target="_blank" rel="noopener">Instagram</a>
+        <a href={site.social.youtube} target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="/athletes">Athletes</a></li>
+        <li><a href="/coaches">Coaches</a></li>
+        <li><a href="/recruiters">Recruiters</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/policies#privacy">Privacy</a></li>
+        <li><a href="/policies#terms">Terms</a></li>
+        <li><a href="/policies#acceptable-use">Acceptable Use</a></li>
+        <li><a href="/policies#dmca">DMCA</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Get the app</h4>
+      <ul>
+        <li><a href={site.appStoreUrl} target="_blank" rel="noopener">App Store</a></li>
+        <li><a href={site.playStoreUrl} target="_blank" rel="noopener">Google Play</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom"><p class="text-muted">© 2026 Ballmecca Inc. All rights reserved.</p></div>
+</footer>
+<style>
+  .footer { background:var(--surface-variant); border-top:1px solid var(--border); padding:56px 0 24px; margin-top:80px; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:32px; }
+  .footer-logo { font-size:26px; color:var(--link); }
+  .footer h4 { font-size:14px; text-transform:uppercase; letter-spacing:1px; color:var(--on-surface-variant); }
+  .footer ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+  .footer-social { display:flex; gap:16px; margin-top:12px; }
+  .footer-bottom { margin-top:40px; padding-top:20px; border-top:1px solid var(--border); }
+  @media (max-width:820px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+</style>
