@@ -11,12 +11,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "astro": "4.16.18",
+    "@astrojs/mdx": "3.1.9",
     "@astrojs/sitemap": "3.2.1",
-    "@astrojs/mdx": "3.1.9"
+    "astro": "4.16.18"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.4",
+    "jsdom": "^25.0.1",
     "typescript": "5.6.3",
     "vitest": "2.1.8"
   }
