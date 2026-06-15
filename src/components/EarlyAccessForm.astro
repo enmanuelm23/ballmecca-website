@@ -19,14 +19,21 @@ import { site } from '../data/site';
 <script>
   const form = document.getElementById('early-access') as HTMLFormElement | null;
   const status = document.getElementById('ea-status');
+  const setStatus = (msg: string) => { if (status) status.textContent = msg; };
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if ((form.elements.namedItem('company_website') as HTMLInputElement)?.value) return; // honeypot
-    status!.textContent = 'Submitting…';
+    const btn = form.querySelector('[type=submit]') as HTMLButtonElement | null;
+    if (btn) btn.disabled = true; // prevent double-submit / duplicate POSTs
+    setStatus('Submitting…');
     try {
       const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      status!.textContent = res.ok ? "You're on the list — we'll be in touch." : 'Something went wrong. Please email support@ballmecca.com.';
+      setStatus(res.ok ? "You're on the list — we'll be in touch." : 'Something went wrong. Please email support@ballmecca.com.');
       if (res.ok) form.reset();
-    } catch { status!.textContent = 'Something went wrong. Please email support@ballmecca.com.'; }
+    } catch {
+      setStatus('Something went wrong. Please email support@ballmecca.com.');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
   });
 </script>

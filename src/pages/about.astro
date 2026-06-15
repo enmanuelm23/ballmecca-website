@@ -16,61 +16,75 @@ const partners = [
 ];
 ---
 <BaseLayout title="About Us" description="Ballmecca's mission: with the right guidance, anyone can achieve greatness. Born in Baltimore out of Loyola University Maryland." path="/about">
-  <section class="container" style="padding:64px 0 24px;">
+  <section class="container about-hero">
     <p class="eyebrow text-accent">Our story</p>
-    <h1 class="display" style="font-size:52px;">We believe anyone can achieve greatness.</h1>
-    <p class="text-muted" style="max-width:680px;">We are a diverse team of engineers, athletes, and educators who believe in the power of Education, Quality Feedback, and Tech for Good.</p>
+    <h1 class="display about-hero-title">We believe anyone can achieve greatness.</h1>
+    <p class="about-prose text-muted">We are a diverse team of engineers, athletes, and educators who believe in the power of Education, Quality Feedback, and Tech for Good.</p>
   </section>
 
-  <section class="container" style="padding:24px 0 48px;">
+  <section class="container about-section">
     <p class="eyebrow text-warm">Our mission</p>
-    <h2 class="display" style="font-size:34px;max-width:760px;">We believe that with the right guidance and feedback, anyone can achieve greatness.</h2>
-    <div style="max-width:720px;">
-      <p class="text-muted">Our platform provides access to top-tier coaching, character-building opportunities, and pathways to success.</p>
+    <h2 class="display about-h">Leveling the playing field.</h2>
+    <div class="about-prose">
+      <p class="text-muted">We believe that with the right guidance and feedback, anyone can achieve greatness. Our platform provides access to top-tier coaching, character-building opportunities, and pathways to success.</p>
       <p class="text-muted">We exist to support underserved youth through the power of sports. Too often, access to quality coaching and support is limited by zip code or income. Ballmecca is leveling the playing field — giving every kid a shot at greatness.</p>
       <p class="text-muted">Through passion, mentorship, and accountability, we create lasting impact beyond the game.</p>
     </div>
   </section>
 
-  <section class="container" style="padding:24px 0 48px;">
+  <section class="container about-section">
     <p class="eyebrow text-warm">What we stand for</p>
-    <h2 class="display" style="font-size:32px;">Our core values.</h2>
+    <h2 class="display about-h">Our core values.</h2>
     <p class="text-muted">Guiding principles for growth on and off the court.</p>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
+    <div class="about-grid">
       {values.map((v) => (
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <div class="about-card">
           <h3>{v.h}</h3><p class="text-muted">{v.p}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <section class="container" style="padding:24px 0 48px;">
+  <section class="container about-section">
     <p class="eyebrow text-accent">The people behind it</p>
-    <h2 class="display" style="font-size:32px;">Meet the team.</h2>
+    <h2 class="display about-h">Meet the team.</h2>
     <p class="text-muted">Our team approaches software engineering with the same values that make the game a lifelong pursuit of growth.</p>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
+    <div class="about-grid">
       {team.map((t) => (
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;">
-          <div class="text-accent" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">{t.role}</div>
-          <h3 style="margin:4px 0 8px;">{t.name}</h3>
+        <div class="about-card">
+          <div class="about-role text-accent">{t.role}</div>
+          <h3 class="about-name">{t.name}</h3>
           <p class="text-muted">{t.bio}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <section class="container" style="padding:24px 0 80px;">
+  <section class="container about-section about-section-last">
     <p class="eyebrow text-warm">Partnerships that power us</p>
-    <h2 class="display" style="font-size:32px;">Our impact is amplified through partnerships aligned with our vision.</h2>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
+    <h2 class="display about-h">Our impact is amplified through partnerships aligned with our vision.</h2>
+    <div class="about-grid">
       {partners.map((p) => (
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;">
-          <div class="display text-accent" style="font-size:24px;">{p.logo}</div>
-          <h3 style="margin:8px 0;">{p.name}</h3>
+        <div class="about-card">
+          <div class="display text-accent about-logo">{p.logo}</div>
+          <h3 class="about-name">{p.name}</h3>
           <p class="text-muted">{p.p}</p>
         </div>
       ))}
     </div>
   </section>
 </BaseLayout>
+<style>
+  .about-hero { padding:64px 0 24px; }
+  .about-hero-title { font-size:clamp(34px,6vw,52px); }
+  .about-section { padding:24px 0 48px; }
+  .about-section-last { padding-bottom:80px; }
+  .about-h { font-size:clamp(26px,4vw,34px); max-width:760px; }
+  .about-prose { max-width:720px; }
+  .about-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:20px; }
+  .about-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:24px; }
+  .about-role { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+  .about-name { margin:4px 0 8px; }
+  .about-logo { font-size:24px; margin-bottom:8px; }
+  @media (max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
+</style>

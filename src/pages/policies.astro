@@ -15,7 +15,7 @@ const nav = [
     <h1 class="display" style="font-size:44px;">Our policies.</h1>
     <p class="text-muted">View all our policies below. Questions? <a href="mailto:support@ballmecca.com">support@ballmecca.com</a></p>
     <div class="pol-grid">
-      <aside class="pol-nav">
+      <aside class="pol-nav" aria-label="Policy sections">
         <ul>{nav.map((n) => <li><a href={`#${n.id}`}>{n.label}</a></li>)}</ul>
       </aside>
       <div class="pol-body">
@@ -312,13 +312,13 @@ const nav = [
       </div>
     </div>
   </section>
+  <style>
+    .pol-grid { display:grid; grid-template-columns:240px 1fr; gap:40px; margin-top:24px; }
+    .pol-nav { position:sticky; top:80px; align-self:start; }
+    .pol-nav ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+    .pol-body section { padding:24px 0; border-top:1px solid var(--border); scroll-margin-top:90px; }
+    .pol-body h2 { font-family:var(--font-display); }
+    .pol-body .last-updated { font-size:13px; margin-top:-4px; }
+    @media (max-width:820px){ .pol-grid{ grid-template-columns:1fr; } .pol-nav{ position:static; } }
+  </style>
 </BaseLayout>
-<style>
-  .pol-grid { display:grid; grid-template-columns:240px 1fr; gap:40px; margin-top:24px; }
-  .pol-nav { position:sticky; top:80px; align-self:start; }
-  .pol-nav ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-  .pol-body section { padding:24px 0; border-top:1px solid var(--border); scroll-margin-top:90px; }
-  .pol-body h2 { font-family:var(--font-display); }
-  .pol-body .last-updated { font-size:13px; margin-top:-4px; }
-  @media (max-width:820px){ .pol-grid{ grid-template-columns:1fr; } .pol-nav{ position:static; } }
-</style>

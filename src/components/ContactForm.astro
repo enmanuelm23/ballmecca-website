@@ -9,7 +9,7 @@ const subjects = ['Coach joining the platform','Athlete looking for coaching','P
     <div><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email" /></div>
   </div>
   <label for="c-subject">Subject</label>
-  <select id="c-subject" name="subject">{subjects.map((s) => <option value={s}>{s}</option>)}</select>
+  <select id="c-subject" name="subject" required>{subjects.map((s) => <option value={s}>{s}</option>)}</select>
   <label for="c-message">Message</label>
   <textarea id="c-message" name="message" rows="6" required></textarea>
   <input type="text" name="company_website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
@@ -29,14 +29,21 @@ const subjects = ['Coach joining the platform','Athlete looking for coaching','P
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = document.getElementById('c-status');
+  const setStatus = (msg: string) => { if (status) status.textContent = msg; };
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if ((form.elements.namedItem('company_website') as HTMLInputElement)?.value) return;
-    status!.textContent = 'Sending…';
+    if ((form.elements.namedItem('company_website') as HTMLInputElement)?.value) return; // honeypot
+    const btn = form.querySelector('[type=submit]') as HTMLButtonElement | null;
+    if (btn) btn.disabled = true; // prevent double-submit / duplicate POSTs
+    setStatus('Sending…');
     try {
       const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{ Accept:'application/json' } });
-      status!.textContent = res.ok ? 'Thanks — we\'ll be in touch shortly.' : 'Something went wrong. Email support@ballmecca.com.';
+      setStatus(res.ok ? 'Thanks — we\'ll be in touch shortly.' : 'Something went wrong. Email support@ballmecca.com.');
       if (res.ok) form.reset();
-    } catch { status!.textContent = 'Something went wrong. Email support@ballmecca.com.'; }
+    } catch {
+      setStatus('Something went wrong. Email support@ballmecca.com.');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
   });
 </script>
