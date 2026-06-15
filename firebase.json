@@ -1,0 +1,25 @@
+{
+  "hosting": {
+    "public": "dist",
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/api/submitForm", "function": "submitForm" }
+    ],
+    "redirects": [
+      { "source": "/index.html", "destination": "/", "type": 301 },
+      { "source": "/about.html", "destination": "/about", "type": 301 },
+      { "source": "/contact.html", "destination": "/contact", "type": 301 },
+      { "source": "/faq.html", "destination": "/faq", "type": 301 },
+      { "source": "/policies.html", "destination": "/policies", "type": 301 }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|css|woff2|jpg|png|svg|webp)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      }
+    ]
+  },
+  "functions": { "source": "functions", "runtime": "nodejs20" }
+}
