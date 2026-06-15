@@ -5,7 +5,7 @@ import { site } from '../data/site';
 <section class="container sports">
   <p class="eyebrow text-accent">On the platform</p>
   <h2 class="display sports-title">Find coaching in your sport.</h2>
-  <div class="sports-track" role="list">
+  <div class="sports-track" role="list" tabindex="0" aria-label="Sports on the platform">
     {sports.map((s) => (
       <div class="sport" role="listitem">
         <div class="sport-icon" aria-hidden="true">{s.icon}</div>

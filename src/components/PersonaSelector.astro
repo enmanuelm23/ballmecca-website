@@ -28,6 +28,9 @@ import { personas } from '../data/personas'; // created in Phase 3, Task 3.1
   @media (max-width:820px){ .selector-grid{ grid-template-columns:1fr; } }
 </style>
 <script>
+  // Read-only: the home page only REFLECTS a previously saved persona (pre-highlight).
+  // setPersona() is written by each persona landing page on load (PersonaLayout, Phase 3),
+  // NOT on click here — clicking a card just navigates via the anchor href (no redirect).
   import { getPersona } from '../lib/persona';
   const saved = getPersona();
   if (saved) document.querySelector(`.persona-card[data-persona="${saved}"]`)?.setAttribute('data-highlight', 'true');

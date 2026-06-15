@@ -9,13 +9,15 @@ function initial(name: string) { return name.replace(/^Coach\s+/i, '').trim()[0]
     {featuredCoaches.map((c) => (
       <article class="coach">
         <div class="coach-photo">
+          <!-- Pre-CSP debt: this inline onerror needs a non-inline fallback once a CSP is added (Phase 9). -->
           <img src={c.image} alt={`${c.name}, ${c.sport} coach`} loading="lazy" width="320" height="320"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+               onerror="this.setAttribute('aria-hidden','true'); this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="coach-fallback" style="display:none;" aria-hidden="true">{initial(c.name)}</div>
         </div>
         <div class="coach-body">
           <div class="text-accent coach-sport">{c.sport}</div>
           <h3>{c.name}</h3>
+          {c.credential && <div class="text-muted coach-cred">{c.credential}</div>}
           {c.location && <div class="text-muted coach-loc">📍 {c.location}</div>}
         </div>
       </article>
@@ -33,5 +35,6 @@ function initial(name: string) { return name.replace(/^Coach\s+/i, '').trim()[0]
     font-family:var(--font-display); font-size:48px; color:var(--link); }
   .coach-body { padding:16px; }
   .coach-sport { font-size:13px; font-weight:700; }
+  .coach-cred { font-size:13px; margin-top:2px; }
   @media (max-width:820px){ .coaches-grid{ grid-template-columns:1fr 1fr; } }
 </style>
