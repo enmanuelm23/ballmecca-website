@@ -5,7 +5,10 @@ export function send(event: string, params: Record<string, string> = {}) {
   window.dataLayer?.push({ event, ...params });
 }
 
+let delegated = false;
 export function initDelegation() {
+  if (delegated) return; // call-once guard: avoid duplicate listeners / double-fired events
+  delegated = true;
   document.addEventListener('click', (e) => {
     const el = (e.target as HTMLElement)?.closest('[data-event]') as HTMLElement | null;
     if (!el) return;

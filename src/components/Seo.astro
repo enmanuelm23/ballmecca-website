@@ -8,6 +8,12 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description = site.description, path, ogImage = '/images/og-default.jpg', noindex = false } = Astro.props;
+// Fail the build (not silently in prod) if a caller passes a relative or off-domain
+// path/ogImage — both must be root-relative so canonical/OG URLs resolve on-domain.
+if (!path.startsWith('/')) throw new Error(`Seo: path must start with "/" — got "${path}"`);
+if (!ogImage.startsWith('/') && !ogImage.startsWith('http')) {
+  throw new Error(`Seo: ogImage must be root-relative or absolute — got "${ogImage}"`);
+}
 const canonical = new URL(path, site.url).href;
 const ogAbs = new URL(ogImage, site.url).href;
 const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} | ${site.name}`;
