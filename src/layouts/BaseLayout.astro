@@ -5,8 +5,9 @@ import Footer from '../components/Footer.astro';
 import Seo from '../components/Seo.astro';
 interface Props {
   title: string; description?: string; path: string; ogImage?: string; noindex?: boolean;
+  ogType?: 'website' | 'article'; publishedTime?: string;
 }
-const { title, description, path, ogImage, noindex } = Astro.props;
+const { title, description, path, ogImage, noindex, ogType, publishedTime } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@ const { title, description, path, ogImage, noindex } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="/images/favicon.png" />
   <link rel="preload" href="/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin />
-  <Seo title={title} description={description} path={path} ogImage={ogImage} noindex={noindex} />
+  <Seo title={title} description={description} path={path} ogImage={ogImage} noindex={noindex} ogType={ogType} publishedTime={publishedTime} />
   <slot name="head" />
 </head>
 <body>

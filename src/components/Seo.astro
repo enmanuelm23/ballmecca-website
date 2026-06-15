@@ -6,8 +6,10 @@ interface Props {
   path: string;
   ogImage?: string;
   noindex?: boolean;
+  ogType?: 'website' | 'article';
+  publishedTime?: string; // ISO date, only for og:type=article
 }
-const { title, description = site.description, path, ogImage = '/images/og-default.jpg', noindex = false } = Astro.props;
+const { title, description = site.description, path, ogImage = '/images/og-default.jpg', noindex = false, ogType = 'website', publishedTime } = Astro.props;
 // Fail the build (not silently in prod) if a caller passes a relative or off-domain
 // path/ogImage — both must be root-relative so canonical/OG URLs resolve on-domain.
 if (!path.startsWith('/')) throw new Error(`Seo: path must start with "/" — got "${path}"`);
@@ -23,7 +25,8 @@ const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} 
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex,nofollow" />}
 <meta name="color-scheme" content="dark" />
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
+{ogType === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
 <meta property="og:site_name" content={site.name} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />

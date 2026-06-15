@@ -6,10 +6,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 ---
 <BaseLayout title="Blog" description="Coaching tips, athlete stories, and Ballmecca news." path="/blog">
   <section class="container" style="padding:64px 0;">
-    <h1 class="display" style="font-size:48px;">The Ballmecca blog.</h1>
-    <ul style="list-style:none;padding:0;display:grid;gap:24px;margin-top:24px;">
+    <h1 class="display" style="font-size:clamp(32px,5vw,48px);">The Ballmecca blog.</h1>
+    <ul style="list-style:none;padding:0;display:grid;gap:var(--space-4);margin-top:var(--space-4);">
       {posts.map((post) => (
-        <li style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;">
+        <li style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-4);">
           <a href={`/blog/${post.slug}`} data-event="blog_click">
             <h2 style="margin:0 0 6px;">{post.data.title}</h2>
           </a>
