@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const nav = [
+  { id:'privacy', label:'Privacy Policy' },
+  { id:'terms', label:'Terms & Conditions' },
+  { id:'returns', label:'Returns Policy' },
+  { id:'acceptable-use', label:'Acceptable Use' },
+  { id:'cookie', label:'Cookie Policy' },
+  { id:'dmca', label:'DMCA' },
+  { id:'disclaimer', label:'Disclaimer' },
+];
+---
+<BaseLayout title="Policies" description="Ballmecca's privacy policy, terms, and legal information." path="/policies">
+  <section class="container" style="padding:48px 0;">
+    <h1 class="display" style="font-size:44px;">Our policies.</h1>
+    <p class="text-muted">View all our policies below. Questions? <a href="mailto:support@ballmecca.com">support@ballmecca.com</a></p>
+    <div class="pol-grid">
+      <aside class="pol-nav">
+        <ul>{nav.map((n) => <li><a href={`#${n.id}`}>{n.label}</a></li>)}</ul>
+      </aside>
+      <div class="pol-body">
+
+        <section id="privacy">
+          <h2>Privacy Policy</h2>
+          <p class="text-muted last-updated">Last updated: January 27, 2023</p>
+          <p>This privacy notice for Ballmecca Inc. ("Company," "we," "us," or "our"), describes how and why we might collect, store, use, and/or share ("process") your information when you use our services ("Services"), such as when you:</p>
+          <ul>
+            <li>Download and use our mobile application (Ballmecca), or any other application of ours that links to this privacy notice</li>
+            <li>Engage with us in other related ways, including any sales, marketing, or events</li>
+          </ul>
+          <p><strong>Questions or concerns?</strong> Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at support@ballmecca.com.</p>
+
+          <h3>1. WHAT INFORMATION DO WE COLLECT?</h3>
+          <p><strong>Personal information you disclose to us</strong></p>
+          <p>We collect personal information that you voluntarily provide to us when you register on the Services, express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</p>
+          <p>The personal information we collect may include:</p>
+          <ul>
+            <li>Names, phone numbers, email addresses</li>
+            <li>Usernames, passwords, billing addresses</li>
+            <li>Debit/credit card numbers, contact or authentication data</li>
+            <li>Job titles, contact preferences, zip code</li>
+            <li>Birthdate, gender, height</li>
+            <li>Student data, health data, biometric data</li>
+            <li>Social security numbers or other government identifiers</li>
+          </ul>
+          <p><strong>Payment Data:</strong> We may collect data necessary to process your payment if you make purchases. All payment data is stored by Stripe, Inc.</p>
+          <p><strong>Application Data:</strong> If you use our application(s), we may collect geolocation information, mobile device access data, push notifications, and other device information necessary to maintain security and operation of our application(s).</p>
+
+          <h3>2. HOW DO WE PROCESS YOUR INFORMATION?</h3>
+          <p>We process your personal information for a variety of reasons, including:</p>
+          <ul>
+            <li>To facilitate account creation and authentication</li>
+            <li>To deliver and facilitate delivery of services to the user</li>
+            <li>To respond to user inquiries and provide support</li>
+            <li>To send administrative information</li>
+            <li>To fulfill and manage your orders</li>
+            <li>To enable user-to-user communications</li>
+            <li>To request feedback and contact you about your use of our Services</li>
+            <li>To send marketing and promotional communications</li>
+            <li>To protect our Services from fraud and security threats</li>
+            <li>To identify usage trends and improve our Services</li>
+            <li>To deliver personalized content and advertising</li>
+            <li>To deliver relevant training content and connect you with coaches</li>
+          </ul>
+
+          <h3>3. WHO DO WE SHARE YOUR INFORMATION WITH?</h3>
+          <p>We may share your information in specific situations:</p>
+          <ul>
+            <li><strong>Business Transfers:</strong> In connection with any merger, sale of company assets, or acquisition</li>
+            <li><strong>Other Users:</strong> When you share personal information publicly on the Services</li>
+            <li><strong>Service Providers:</strong> Third parties that process information on our behalf</li>
+          </ul>
+
+          <h3>4. HOW DO WE KEEP YOUR INFORMATION SAFE?</h3>
+          <p>We have implemented appropriate and reasonable technical and organizational security measures designed to protect the security of any personal information we process. However, no electronic transmission over the Internet can be guaranteed to be 100% secure. We cannot promise that hackers or unauthorized third parties will not be able to defeat our security.</p>
+
+          <h3>5. WHAT ARE YOUR PRIVACY RIGHTS?</h3>
+          <p>Depending on where you are located, you may have certain rights regarding your personal information, including:</p>
+          <ul>
+            <li>The right to request access to your personal information</li>
+            <li>The right to request correction or deletion of your personal information</li>
+            <li>The right to restrict the processing of your personal information</li>
+            <li>The right to withdraw consent at any time</li>
+            <li>The right to opt out of marketing communications</li>
+          </ul>
+          <p>You can make such requests by contacting us at support@ballmecca.com.</p>
+
+          <h3>6. CALIFORNIA RESIDENTS — SPECIFIC PRIVACY RIGHTS</h3>
+          <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA), including the right to know what personal information is collected, used, or shared; the right to delete personal information; and the right to opt out of the sale or sharing of personal information. Ballmecca Inc. has not sold or shared any personal information to third parties for a business purpose in the preceding twelve months.</p>
+
+          <h3>7. VIRGINIA RESIDENTS — SPECIFIC PRIVACY RIGHTS</h3>
+          <p>If you are a resident of Virginia, you may be granted specific rights under the Virginia Consumer Data Protection Act (CDPA), including the right to access, correct, delete, or obtain a copy of your personal data, and the right to opt out of processing for targeted advertising or profiling.</p>
+
+          <h3>8. HOW LONG DO WE KEEP YOUR INFORMATION?</h3>
+          <p>We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law. When we have no ongoing legitimate business need to process your personal information, we will delete or anonymize such information.</p>
+
+          <h3>9. DO WE MAKE UPDATES TO THIS NOTICE?</h3>
+          <p>Yes, we will update this notice as necessary to stay compliant with relevant laws. The updated version will be indicated by an updated "Revised" date. We encourage you to review this privacy notice frequently to be informed of how we are protecting your information.</p>
+
+          <h3>10. HOW CAN YOU CONTACT US?</h3>
+          <p>If you have questions or comments about this notice, you may email us at support@ballmecca.com or by post to:</p>
+          <p>
+            Ballmecca Inc.<br />
+            4709 Harford Rd #163<br />
+            Baltimore, MD 21214<br />
+            United States
+          </p>
+        </section>
+
+        <section id="terms">
+          <h2>Terms & Conditions</h2>
+          <p class="text-muted last-updated">Last updated: February 03, 2023</p>
+
+          <h3>1. AGREEMENT TO TERMS</h3>
+          <p>These Terms of Use constitute a legally binding agreement made between you and Ballmecca Inc. ("Company," "we," "us," or "our"), concerning your access to and use of the https://ballmecca.com website and any related media, mobile website or mobile application. We are registered in Maryland, United States at 4709 Harford Rd #163, Baltimore, MD 21214.</p>
+          <p>By accessing the Site, you have read, understood, and agreed to be bound by all of these Terms of Use. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS, YOU ARE PROHIBITED FROM USING THE SITE AND MUST DISCONTINUE USE IMMEDIATELY.</p>
+          <p>We reserve the right to make changes to these Terms at any time. We will alert you of changes by updating the "Last updated" date. Your continued use of the Site constitutes acceptance of revised Terms.</p>
+
+          <h3>2. INTELLECTUAL PROPERTY RIGHTS</h3>
+          <p>The Site is our proprietary property. All source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics (collectively, the "Content") and trademarks, service marks, and logos (the "Marks") are owned or controlled by us and protected by copyright and trademark laws.</p>
+          <p>The Content and Marks are provided on the Site "AS IS" for personal use only. Except as expressly provided in these Terms, no part of the Site may be copied, reproduced, republished, uploaded, posted, distributed, sold, licensed, or otherwise exploited for commercial purposes without our express prior written permission.</p>
+
+          <h3>3. USER REPRESENTATIONS</h3>
+          <p>By using the Site, you represent and warrant that:</p>
+          <ul>
+            <li>You have the legal capacity and agree to comply with these Terms</li>
+            <li>You are not under the age of 13</li>
+            <li>If a minor, you have received parental permission to use the Site</li>
+            <li>You will not access the Site through automated or non-human means</li>
+            <li>You will not use the Site for any illegal or unauthorized purpose</li>
+            <li>Your use will not violate any applicable law or regulation</li>
+          </ul>
+
+          <h3>4. PROHIBITED ACTIVITIES</h3>
+          <p>As a user, you agree not to:</p>
+          <ul>
+            <li>Systematically retrieve data to create databases without permission</li>
+            <li>Trick, defraud, or mislead us or other users</li>
+            <li>Circumvent security-related features</li>
+            <li>Disparage or harm our reputation or the Site</li>
+            <li>Use information to harass, abuse, or harm another person</li>
+            <li>Submit false reports of abuse or misconduct</li>
+            <li>Violate any applicable laws or regulations</li>
+            <li>Upload viruses, Trojan horses, or interfere with the Site's operation</li>
+            <li>Engage in automated use of the system or data harvesting</li>
+            <li>Delete copyright or proprietary notices</li>
+            <li>Attempt to impersonate another user</li>
+            <li>Belittle, ridicule, or intentionally misguide other users</li>
+          </ul>
+
+          <h3>5. USER GENERATED CONTRIBUTIONS</h3>
+          <p>The Site may allow you to create, submit, or publish content and materials ("Contributions"). When you create Contributions, you represent and warrant that:</p>
+          <ul>
+            <li>You do not infringe any third-party intellectual property rights</li>
+            <li>You are the owner or have necessary licenses and permissions</li>
+            <li>You have consent from identifiable individuals in your Contributions</li>
+            <li>Your Contributions are accurate and not misleading</li>
+            <li>Your Contributions are not spam or unsolicited advertising</li>
+            <li>Your Contributions are not obscene, lewd, or otherwise objectionable</li>
+            <li>Your Contributions do not violate any laws or regulations</li>
+            <li>Your Contributions do not violate privacy or publicity rights</li>
+          </ul>
+
+          <h3>6. CONTRIBUTION LICENSE</h3>
+          <p>By posting Contributions to the Site, you automatically grant us an unrestricted, unlimited, irrevocable, perpetual, non-exclusive, transferable, royalty-free, worldwide right to use, copy, reproduce, disclose, publish, distribute, and create derivative works of your Contributions for any purpose.</p>
+          <p>You waive all moral rights to your Contributions, and you warrant that moral rights have not been asserted. You retain ownership of all Contributions, but we have the right to edit, redact, re-categorize, or delete any Contributions at any time.</p>
+
+          <h3>7. GUIDELINES FOR REVIEWS</h3>
+          <p>When posting reviews, you must comply with the following:</p>
+          <ul>
+            <li>Have firsthand experience with the person/entity being reviewed</li>
+            <li>Not include offensive profanity or abusive language</li>
+            <li>Not include discriminatory references</li>
+            <li>Not reference illegal activity</li>
+            <li>Not post false or misleading statements</li>
+            <li>Not organize campaigns encouraging others to post reviews</li>
+          </ul>
+
+          <h3>8. SITE MANAGEMENT</h3>
+          <p>We reserve the right to: monitor the Site for violations; take legal action against violators; refuse or restrict access to content; remove excessive or burdensome files; and otherwise manage the Site to protect our rights and facilitate proper functioning.</p>
+
+          <h3>9. TERM AND TERMINATION</h3>
+          <p>These Terms remain in effect while you use the Site. We reserve the right to deny access to the Site to any person for any reason, without notice or liability. If we terminate your account, you are prohibited from registering a new account under any name.</p>
+
+          <h3>10. MODIFICATIONS AND INTERRUPTIONS</h3>
+          <p>We reserve the right to change, modify, or remove the contents of the Site at any time without notice. We also reserve the right to modify or discontinue all or part of the Site. We are not liable for any modification, suspension, or discontinuance of the Site.</p>
+
+          <h3>11. GOVERNING LAW</h3>
+          <p>These Terms are governed by and construed in accordance with the laws of the State of Maryland, without regard to its conflict of law principles.</p>
+
+          <h3>12. DISPUTE RESOLUTION</h3>
+          <p><strong>Informal Negotiations:</strong> The Parties agree to first attempt to negotiate any Dispute informally for at least thirty (30) days before initiating arbitration.</p>
+          <p><strong>Binding Arbitration:</strong> If informal negotiations fail, the Dispute will be finally and exclusively resolved through binding arbitration under the Commercial Arbitration Rules of the American Arbitration Association (AAA).</p>
+          <p><strong>Jurisdiction:</strong> Any litigation shall be commenced in the state and federal courts located in Baltimore City, Maryland.</p>
+
+          <h3>13. DISCLAIMER</h3>
+          <p>THE SITE IS PROVIDED ON AN "AS-IS" AND "AS-AVAILABLE" BASIS. YOU AGREE THAT YOUR USE OF THE SITE WILL BE AT YOUR SOLE RISK. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH THE SITE. WE MAKE NO WARRANTIES ABOUT THE ACCURACY OR COMPLETENESS OF THE SITE'S CONTENT.</p>
+
+          <h3>14. LIMITATIONS OF LIABILITY</h3>
+          <p>IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES. OUR LIABILITY TO YOU WILL AT ALL TIMES BE LIMITED TO THE LESSER OF THE AMOUNT PAID BY YOU DURING THE SIX (6) MONTH PERIOD PRIOR TO ANY CAUSE OF ACTION OR $200.00 USD.</p>
+
+          <h3>15. INDEMNIFICATION</h3>
+          <p>You agree to defend, indemnify, and hold us harmless from any loss, damage, liability, claim, or demand made by any third party due to: your Contributions; use of the Site; breach of these Terms; any breach of your representations; your violation of third-party rights; or any harmful act toward other users.</p>
+
+          <h3>16. CONTACT US</h3>
+          <p>For complaints or questions, contact us at:</p>
+          <p>
+            Ballmecca Inc.<br />
+            4709 Harford Rd #163<br />
+            Baltimore, MD 21214<br />
+            United States<br />
+            support@ballmecca.com
+          </p>
+        </section>
+
+        <section id="returns">
+          <h2>Returns Policy</h2>
+          <p class="text-muted last-updated">Last updated: April 10, 2026</p>
+
+          <h3>Refunds</h3>
+          <p>All sales are final and no refund will be issued.</p>
+          <p><strong>Refund Policy:</strong> At Ballmecca, we strive to ensure customer satisfaction. However, as a general rule, we do not issue refunds once a coaching service has been provided. If you believe there are extenuating circumstances that warrant a refund, please contact our support team at support@ballmecca.com within 48 hours of receiving your service.</p>
+          <p>While we maintain a policy of no refunds, we reserve the right to make exceptions at our sole discretion on a case-by-case basis. Please note that contacting our team within the specified 48-hour window does not guarantee a refund, as decisions are made based on the specifics of each individual case.</p>
+
+          <h3>Questions</h3>
+          <p>If you have any questions concerning our return policy, please contact us at: support@ballmecca.com</p>
+        </section>
+
+        <section id="acceptable-use">
+          <h2>Acceptable Use Policy</h2>
+          <p class="text-muted last-updated">Last updated: December 13, 2023</p>
+          <p>This Acceptable Use Policy is part of our Terms and Conditions and should be read alongside our main Legal Terms. Your continued use of our Services implies acceptance of these Legal Terms.</p>
+
+          <h3>Use of the Services</h3>
+          <p>When you use the Services you warrant that you will comply with this Policy and with all applicable laws. You also acknowledge that you may not:</p>
+          <ul>
+            <li>Systematically retrieve data or other content to create databases without written permission</li>
+            <li>Make unauthorized use including collecting usernames and/or email addresses for unsolicited email</li>
+            <li>Circumvent, disable, or interfere with security-related features</li>
+            <li>Engage in unauthorized framing or linking to the Services</li>
+            <li>Trick, defraud, or mislead us and other users</li>
+            <li>Make improper use of support services or submit false reports</li>
+          </ul>
+        </section>
+
+        <section id="cookie">
+          <h2>Cookie Policy</h2>
+          <p class="text-muted last-updated">Last updated: July 27, 2023</p>
+
+          <h3>What are Cookies?</h3>
+          <p>Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners to make their websites work more efficiently and to provide reporting information.</p>
+          <p>Cookies set by Ballmecca Inc. are called "first-party cookies." Cookies set by third parties are called "third-party cookies." Third-party cookies enable third-party features or functionality such as advertising, interactive content, and analytics.</p>
+
+          <h3>Why Do We Use Cookies?</h3>
+          <p>We use first- and third-party cookies for several reasons:</p>
+          <ul>
+            <li>Some cookies are required for technical reasons to operate our Website (essential cookies)</li>
+            <li>Other cookies enable us to track and target the interests of our users</li>
+            <li>Third parties serve cookies for advertising, analytics, and other purposes</li>
+          </ul>
+
+          <h3>How Can I Control Cookies?</h3>
+          <p>You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in the Cookie Consent Manager. Essential cookies cannot be rejected as they are strictly necessary to provide services.</p>
+          <p>You may also set or amend your web browser controls to accept or refuse cookies. For more information on managing cookies on popular browsers, visit your browser's help section.</p>
+        </section>
+
+        <section id="dmca">
+          <h2>Digital Millennium Copyright Act (DMCA)</h2>
+          <p class="text-muted last-updated">Last updated: April 10, 2026</p>
+          <p>Ballmecca Inc. respects the intellectual property rights of others. Per the DMCA, Ballmecca Inc. will respond expeditiously to claims of copyright infringement on the Site if submitted to Ballmecca Inc.'s Copyright Agent. Upon receipt of a notice alleging copyright infringement, Ballmecca Inc. will take whatever action it deems appropriate, including removal of the allegedly infringing materials and termination of access for repeat infringers.</p>
+
+          <h3>How to Report Copyright Infringement</h3>
+          <p>If you believe that your intellectual property rights have been violated, please provide the following information to our Copyright Agent:</p>
+          <ul>
+            <li>A description of the copyrighted work or intellectual property that you claim has been infringed</li>
+            <li>A description of where the material you claim is infringing is located on the Site</li>
+            <li>An address, telephone number, and email address where we can contact you</li>
+            <li>A statement that you have a good-faith belief that the use is not authorized</li>
+            <li>A statement under penalty of perjury that the information in your notice is accurate</li>
+            <li>Your electronic or physical signature</li>
+          </ul>
+
+          <h3>Copyright Agent Information</h3>
+          <p>Ballmecca Inc. designated Copyright Agent is:</p>
+          <p>
+            Enmanuel Madera<br />
+            646-705-4994<br />
+            E.Madera@ballmecca.com
+          </p>
+        </section>
+
+        <section id="disclaimer">
+          <h2>Disclaimer</h2>
+          <p class="text-muted last-updated">Last updated: January 27, 2023</p>
+
+          <h3>Website Disclaimer</h3>
+          <p>The information provided by Ballmecca Inc. on https://ballmecca.com and our mobile application is for general informational purposes only. All information is provided in good faith, however we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information.</p>
+          <p><strong>UNDER NO CIRCUMSTANCE SHALL WE HAVE ANY LIABILITY TO YOU FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF THE SITE OR OUR MOBILE APPLICATION OR RELIANCE ON ANY INFORMATION PROVIDED. YOUR USE IS SOLELY AT YOUR OWN RISK.</strong></p>
+
+          <h3>External Links Disclaimer</h3>
+          <p>The Site and our mobile application may contain links to other websites or content belonging to third parties. Such external links are not investigated, monitored, or checked for accuracy by us. WE DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY THIRD-PARTY WEBSITES LINKED THROUGH THE SITE. WE WILL NOT BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS.</p>
+
+          <h3>Professional Disclaimer</h3>
+          <p>The Site cannot and does not contain medical or fitness advice. The fitness information is provided for general informational and educational purposes only and is not a substitute for professional advice. THE USE OR RELIANCE OF ANY INFORMATION CONTAINED ON THE SITE OR OUR MOBILE APPLICATION IS SOLELY AT YOUR OWN RISK.</p>
+          <p>By accepting, you affirm that you are physically fit to participate in sports, weight lifting, or athletic activities. You understand that the app does not provide medical advice, and any movements, exercise, or training programs carry inherent risks of injury. Ballmecca and its coaches shall not be held liable for any injuries or damages. Please consult your healthcare provider before starting any new exercise regimen.</p>
+
+          <h3>Testimonials Disclaimer</h3>
+          <p>The Site may contain testimonials by users of our products and/or services. These testimonials reflect the real-life experiences and opinions of such users. However, the experiences are personal to those users and may not be representative of all users. YOUR INDIVIDUAL RESULTS MAY VARY.</p>
+          <p>The testimonials on the Site are not intended as claims that our products and/or services can be used to diagnose, treat, mitigate, cure, prevent, or otherwise treat any disease or medical condition. No testimonials have been clinically proven or evaluated.</p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .pol-grid { display:grid; grid-template-columns:240px 1fr; gap:40px; margin-top:24px; }
+  .pol-nav { position:sticky; top:80px; align-self:start; }
+  .pol-nav ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+  .pol-body section { padding:24px 0; border-top:1px solid var(--border); scroll-margin-top:90px; }
+  .pol-body h2 { font-family:var(--font-display); }
+  .pol-body .last-updated { font-size:13px; margin-top:-4px; }
+  @media (max-width:820px){ .pol-grid{ grid-template-columns:1fr; } .pol-nav{ position:static; } }
+</style>
