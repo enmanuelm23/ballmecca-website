@@ -9,12 +9,21 @@ function isValid(v: string | null): v is PersonaKey {
 
 export function getPersona(): PersonaKey | null {
   if (typeof localStorage === 'undefined') return null;
-  const v = localStorage.getItem(PERSONA_STORAGE_KEY);
-  return isValid(v) ? v : null;
+  try {
+    const v = localStorage.getItem(PERSONA_STORAGE_KEY);
+    return isValid(v) ? v : null;
+  } catch {
+    // Some browsers throw on storage access in private mode.
+    return null;
+  }
 }
 
 export function setPersona(key: PersonaKey): void {
   if (typeof localStorage === 'undefined') return;
   if (!isValid(key)) return;
-  localStorage.setItem(PERSONA_STORAGE_KEY, key);
+  try {
+    localStorage.setItem(PERSONA_STORAGE_KEY, key);
+  } catch {
+    // Storage may be unavailable/denied (private mode, quota) — fail silently.
+  }
 }
