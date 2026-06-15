@@ -1,0 +1,23 @@
+{
+  "name": "ballmecca-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "astro": "4.16.18",
+    "@astrojs/sitemap": "3.2.1",
+    "@astrojs/mdx": "3.1.9"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.4",
+    "typescript": "5.6.3",
+    "vitest": "2.1.8"
+  }
+}
