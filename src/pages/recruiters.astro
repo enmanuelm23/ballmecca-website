@@ -1,0 +1,13 @@
+---
+import PersonaLayout from '../layouts/PersonaLayout.astro';
+import PersonaPage from '../components/PersonaPage.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { personaByKey } from '../data/personas';
+const p = personaByKey('recruiter');
+const faqSchema = { '@context':'https://schema.org','@type':'FAQPage',
+  mainEntity: p.faqs.map((f) => ({ '@type':'Question', name:f.q, acceptedAnswer:{ '@type':'Answer', text:f.a } })) };
+---
+<PersonaLayout title={p.seoTitle} description={p.seoDescription} path={p.href} active="recruiter">
+  <JsonLd slot="head" schema={faqSchema} />
+  <PersonaPage persona={p} />
+</PersonaLayout>
