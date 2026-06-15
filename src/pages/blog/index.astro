@@ -15,7 +15,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           </a>
           <p class="text-muted" style="margin:0;">{post.data.description}</p>
           <time class="text-muted" datetime={post.data.pubDate.toISOString()} style="font-size:13px;">
-            {post.data.pubDate.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}
+            {post.data.pubDate.toLocaleDateString('en-US', { timeZone:'UTC', year:'numeric', month:'long', day:'numeric' })}
           </time>
         </li>
       ))}
