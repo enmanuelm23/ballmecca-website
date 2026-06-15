@@ -1,9 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import JsonLd from '../components/JsonLd.astro';
+import Hero from '../components/Hero.astro';
+import PersonaSelector from '../components/PersonaSelector.astro';
+import StatBar from '../components/StatBar.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import SportsCarousel from '../components/SportsCarousel.astro';
+import TopCoaches from '../components/TopCoaches.astro';
+import MissionStrip from '../components/MissionStrip.astro';
+import DownloadCTA from '../components/DownloadCTA.astro';
+import { site } from '../data/site';
+
+const appSchema = {
+  '@context': 'https://schema.org', '@type': 'MobileApplication',
+  name: 'Ballmecca', operatingSystem: 'iOS, Android', applicationCategory: 'SportsApplication',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  url: site.url, downloadUrl: [site.appStoreUrl, site.playStoreUrl],
+  // NOTE: add aggregateRating ONLY with REAL store numbers (spec §6 honesty guardrail).
+};
 ---
 <BaseLayout title="Home" path="/">
-  <section class="container" style="padding:80px 0;">
-    <h1 class="display" style="font-size:56px;">Ballmecca</h1>
-    <p class="text-muted">Scaffolding works.</p>
-  </section>
+  <JsonLd slot="head" schema={appSchema} />
+  <Hero />
+  <PersonaSelector />
+  <StatBar />
+  <HowItWorks />
+  <SportsCarousel />
+  <TopCoaches />
+  <MissionStrip />
+  <DownloadCTA />
 </BaseLayout>

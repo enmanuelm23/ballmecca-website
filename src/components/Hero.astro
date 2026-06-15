@@ -1,0 +1,19 @@
+---
+import StoreBadges from './StoreBadges.astro';
+const heroImg = '/images/hero-basketball.jpg';
+---
+<section class="hero" style={`background-image:linear-gradient(120deg, rgba(6,70,106,.92), rgba(0,0,0,.78)), url('${heroImg}')`}>
+  <div class="container hero-content">
+    <p class="eyebrow text-accent">Join the movement</p>
+    <h1 class="display hero-title">Revolutionizing sports education for <span class="text-accent">the next generation.</span></h1>
+    <p class="hero-sub">Upload a clip. Get personalized feedback from a verified coach. Level up — anywhere.</p>
+    <StoreBadges source="hero" />
+  </div>
+</section>
+<style>
+  .hero { background-size:cover; background-position:center; }
+  .hero-content { padding:96px 0; max-width:780px; }
+  .hero-title { font-size:clamp(40px, 7vw, 76px); margin:12px 0; }
+  .hero-sub { font-size:19px; color:#dfe7ec; max-width:560px; margin-bottom:24px; }
+  .eyebrow { text-transform:uppercase; letter-spacing:2px; font-size:13px; font-weight:700; }
+</style>
