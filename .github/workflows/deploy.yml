@@ -26,7 +26,7 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ballmecca-982c8
+          projectId: ballmeccaweb
           channelId: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'live' }}
       # Functions: deploy ONLY on push to main (the /api/submitForm rewrite
       # depends on this function; action-hosting-deploy does not deploy it).
@@ -37,4 +37,4 @@ jobs:
         run: |
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
-          npx --yes firebase-tools@13 deploy --only functions --project ballmecca-982c8 --non-interactive
+          npx --yes firebase-tools@13 deploy --only functions --project ballmeccaweb --non-interactive
