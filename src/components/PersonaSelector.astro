@@ -7,12 +7,12 @@ const iconByPersona: Record<string, string> = {
   recruiter: 'search',
 };
 ---
-<section class="container selector">
+<section class="container selector" data-reveal>
   <h2 class="display selector-title">Find the tour built for you.</h2>
   <p class="text-muted">Not sure? Just grab the app above — this is only a guided tour.</p>
   <div class="selector-grid">
     {personas.map((p) => (
-      <a class="persona-card" href={p.href} data-persona={p.key} data-event="persona_select" data-source="home">
+      <a class="persona-card elevate" href={p.href} data-persona={p.key} data-event="persona_select" data-source="home">
         <div class="persona-emoji"><Icon name={iconByPersona[p.key]} size={36} /></div>
         <h3>I'm {p.article} {p.noun}</h3>
         <p class="text-muted">{p.tagline}</p>

@@ -3,12 +3,12 @@ import { featuredCoaches } from '../data/coaches';
 import Icon from './Icon.astro';
 function initial(name: string) { return name.replace(/^Coach\s+/i, '').trim()[0] ?? '?'; }
 ---
-<section class="container coaches">
+<section class="container coaches" data-reveal>
   <p class="eyebrow text-accent">Top performers</p>
   <h2 class="display coaches-title">Meet our coaches.</h2>
   <div class="coaches-grid">
     {featuredCoaches.map((c) => (
-      <article class="coach">
+      <article class="coach elevate">
         <div class="coach-photo">
           <!-- Pre-CSP debt: this inline onerror needs a non-inline fallback once a CSP is added (Phase 9). -->
           <img src={c.image} alt={`${c.name}, ${c.sport} coach`} loading="lazy" width="320" height="320"

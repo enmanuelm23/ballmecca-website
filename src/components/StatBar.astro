@@ -5,14 +5,54 @@ const stats = [
   { value: '100%', label: 'verified coaches', cls: 'text-warm' },
 ];
 ---
-<section class="statbar"><div class="container statbar-inner">
-  {stats.map((s) => (
-    <div class="stat"><span class={`stat-value ${s.cls}`}>{s.value}</span><span class="text-muted">{s.label}</span></div>
-  ))}
-</div></section>
+<section class="statbar band">
+  <div class="container statbar-inner">
+    {stats.map((s, i) => (
+      <div class="stat" data-reveal data-reveal-delay={String(i + 1)}>
+        <span class={`stat-value display ${s.cls}`}>{s.value}</span>
+        <span class="stat-label text-muted">{s.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
 <style>
-  .statbar { background:var(--surface); border-block:1px solid var(--border); }
-  .statbar-inner { display:flex; justify-content:space-around; gap:24px; padding:28px 0; text-align:center; flex-wrap:wrap; }
-  .stat { display:flex; flex-direction:column; gap:6px; }
-  .stat-value { font-family:var(--font-display); font-size:40px; }
+  .statbar { padding: 56px 0; }
+  .statbar-inner {
+    display: flex;
+    justify-content: space-around;
+    gap: 32px;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 180px;
+    padding-inline: 16px;
+    position: relative;
+  }
+  /* subtle vertical divider between stats */
+  .stat + .stat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background: var(--border);
+  }
+  .stat-value {
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 200px;
+    margin-inline: auto;
+  }
+  @media (max-width: 560px) {
+    .stat + .stat::before { display: none; }
+  }
 </style>
