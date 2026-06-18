@@ -10,7 +10,7 @@ import { site } from '../data/site';
     <div class="sports-track" id="sports-track" role="list" tabindex="0" aria-label="Sports on the platform">
       {sports.map((s) => (
         <div class="sport" role="listitem">
-          <span class="sport-dot" aria-hidden="true"></span>
+          <div class="sport-icon" aria-hidden="true">{s.icon}</div>
           <div class="sport-name">{s.name}</div>
           {s.comingSoon && <span class="soon">Coming soon</span>}
         </div>
@@ -27,12 +27,12 @@ import { site } from '../data/site';
   .sports-wrap { position:relative; }
   .sports-track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:12px; }
   .sport { scroll-snap-align:start; flex:0 0 140px; background:var(--surface); border:1px solid var(--border);
-    border-top:3px solid var(--link); border-radius:var(--radius-md); padding:28px 20px; text-align:left;
-    position:relative; display:flex; flex-direction:column; justify-content:flex-end; min-height:104px;
+    border-top:3px solid var(--link); border-radius:var(--radius-md); padding:24px 20px; text-align:center;
+    position:relative; display:flex; flex-direction:column; align-items:center; gap:10px; min-height:120px;
     transition:border-color .2s, transform .2s; }
   .sport:hover { transform:translateY(-3px); }
-  .sport-dot { width:8px; height:8px; border-radius:999px; background:var(--link); margin-bottom:14px; }
-  .sport-name { font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--on-surface);
+  .sport-icon { font-size:42px; line-height:1; }
+  .sport-name { font-family:var(--font-heading); font-weight:700; font-size:16px; color:var(--on-surface);
     letter-spacing:-0.01em; line-height:1.2; }
   .soon { position:absolute; top:8px; right:8px; font-size:10px; background:var(--primary-action);
     color:var(--on-primary-action); padding:2px 8px; border-radius:999px; }
