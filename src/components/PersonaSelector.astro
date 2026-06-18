@@ -1,5 +1,11 @@
 ---
 import { personas } from '../data/personas'; // created in Phase 3, Task 3.1
+import Icon from './Icon.astro';
+const iconByPersona: Record<string, string> = {
+  athlete: 'award',
+  coach: 'clipboard-check',
+  recruiter: 'search',
+};
 ---
 <section class="container selector">
   <h2 class="display selector-title">Find the tour built for you.</h2>
@@ -7,7 +13,7 @@ import { personas } from '../data/personas'; // created in Phase 3, Task 3.1
   <div class="selector-grid">
     {personas.map((p) => (
       <a class="persona-card" href={p.href} data-persona={p.key} data-event="persona_select" data-source="home">
-        <div class="persona-emoji" aria-hidden="true">{p.emoji}</div>
+        <div class="persona-emoji"><Icon name={iconByPersona[p.key]} size={36} /></div>
         <h3>I'm {p.article} {p.noun}</h3>
         <p class="text-muted">{p.tagline}</p>
         <span class="persona-arrow text-accent">{p.cta} →</span>
@@ -23,7 +29,7 @@ import { personas } from '../data/personas'; // created in Phase 3, Task 3.1
     padding:32px; text-align:left; color:var(--on-surface); transition:border-color .2s, transform .2s; }
   .persona-card:hover { text-decoration:none; border-color:var(--link); transform:translateY(-4px); }
   .persona-card[data-highlight] { border-color:var(--primary-action); box-shadow:0 0 0 2px var(--primary-action) inset; }
-  .persona-emoji { font-size:40px; }
+  .persona-emoji { color:var(--link); line-height:0; }
   .persona-arrow { font-weight:700; }
   @media (max-width:820px){ .selector-grid{ grid-template-columns:1fr; } }
 </style>
