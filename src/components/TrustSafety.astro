@@ -1,0 +1,49 @@
+---
+const pillars = [
+  {
+    title: 'Verified coaches',
+    body: 'Every coach is vetted with real credentials before they can coach on Ballmecca.',
+  },
+  {
+    title: 'Built for young athletes',
+    body: 'Minors use parent-managed accounts, so a parent stays in control of bookings and messaging.',
+  },
+  {
+    title: 'Secure payments',
+    body: 'Payments are processed securely through Stripe. You only pay for sessions you book.',
+  },
+  {
+    title: 'Privacy first',
+    body: 'We take youth safety and data privacy seriously.',
+    link: { href: '/policies#privacy', label: 'see our Privacy Policy' },
+  },
+];
+---
+<section class="container trust">
+  <p class="eyebrow text-accent">Trust &amp; Safety</p>
+  <h2 class="display trust-title">Coaching parents can trust.</h2>
+  <div class="trust-grid">
+    {pillars.map((p) => (
+      <article class="trust-card">
+        <span class="trust-mark" aria-hidden="true">&#10003;</span>
+        <h3>{p.title}</h3>
+        <p class="text-muted">
+          {p.body}{p.link && (<> <a href={p.link.href}>{p.link.label}</a>.</>)}
+        </p>
+      </article>
+    ))}
+  </div>
+</section>
+<style>
+  .trust { padding:40px 0 80px; }
+  .trust-title { font-size:40px; margin:8px 0 24px; }
+  .trust-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .trust-card { background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--link);
+    border-radius:var(--radius-md); padding:24px; }
+  .trust-mark { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px;
+    border-radius:999px; background:var(--link); color:var(--on-primary-action); font-weight:700; font-size:18px; }
+  .trust-card h3 { margin:14px 0 8px; font-size:18px; }
+  .trust-card p { font-size:14px; line-height:1.5; }
+  @media (max-width:1024px){ .trust-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .trust-grid{ grid-template-columns:1fr; } }
+</style>

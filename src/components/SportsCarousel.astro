@@ -5,20 +5,26 @@ import { site } from '../data/site';
 <section class="container sports">
   <p class="eyebrow text-accent">On the platform</p>
   <h2 class="display sports-title">Find coaching in your sport.</h2>
-  <div class="sports-track" role="list" tabindex="0" aria-label="Sports on the platform">
-    {sports.map((s) => (
-      <div class="sport" role="listitem">
-        <div class="sport-icon" aria-hidden="true">{s.icon}</div>
-        <div class="sport-name">{s.name}</div>
-        {s.comingSoon && <span class="soon">Coming soon</span>}
-      </div>
-    ))}
+  <div class="sports-wrap">
+    <button class="sports-arrow sports-arrow-left" id="sports-arrow-left" type="button" aria-label="Scroll sports left">&lsaquo;</button>
+    <div class="sports-track" id="sports-track" role="list" tabindex="0" aria-label="Sports on the platform">
+      {sports.map((s) => (
+        <div class="sport" role="listitem">
+          <div class="sport-icon" aria-hidden="true">{s.icon}</div>
+          <div class="sport-name">{s.name}</div>
+          {s.comingSoon && <span class="soon">Coming soon</span>}
+        </div>
+      ))}
+    </div>
+    <div class="sports-fade" aria-hidden="true"></div>
+    <button class="sports-arrow sports-arrow-right" id="sports-arrow-right" type="button" aria-label="Scroll sports right">&rsaquo;</button>
   </div>
   <a class="btn btn-outline" href={site.appStoreUrl} target="_blank" rel="noopener" data-event="store_click" data-store="app_store" data-source="sports">Get the app</a>
 </section>
 <style>
   .sports { padding:40px 0 80px; }
   .sports-title { font-size:40px; margin:8px 0 24px; }
+  .sports-wrap { position:relative; }
   .sports-track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:12px; }
   .sport { scroll-snap-align:start; flex:0 0 140px; background:var(--surface); border:1px solid var(--border);
     border-radius:var(--radius-md); padding:24px; text-align:center; position:relative; }
@@ -26,4 +32,25 @@ import { site } from '../data/site';
   .sport-name { margin-top:8px; font-weight:700; }
   .soon { position:absolute; top:8px; right:8px; font-size:10px; background:var(--primary-action);
     color:var(--on-primary-action); padding:2px 8px; border-radius:999px; }
+  .sports-fade { position:absolute; top:0; right:0; bottom:12px; width:64px; pointer-events:none;
+    background:linear-gradient(to right, transparent, var(--canvas)); }
+  .sports-arrow { display:none; position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:40px; height:40px; border-radius:999px; border:1px solid var(--border); background:var(--surface);
+    color:var(--on-surface); font-size:24px; line-height:1; cursor:pointer; align-items:center; justify-content:center; }
+  .sports-arrow:hover { border-color:var(--link); }
+  .sports-arrow-left { left:-8px; }
+  .sports-arrow-right { right:-8px; }
+  @media (min-width: 821px) {
+    .sports-arrow { display:flex; }
+  }
 </style>
+<script>
+  const track = document.getElementById('sports-track');
+  const STEP = 320;
+  document.getElementById('sports-arrow-left')?.addEventListener('click', () => {
+    track?.scrollBy({ left: -STEP, behavior: 'smooth' });
+  });
+  document.getElementById('sports-arrow-right')?.addEventListener('click', () => {
+    track?.scrollBy({ left: STEP, behavior: 'smooth' });
+  });
+</script>
