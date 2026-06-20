@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The marketing site does NO client-side Firestore access. All writes go
+    // through the submitForm Cloud Function using the Admin SDK, which bypasses
+    // these rules. Therefore deny all direct client read/write access.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
