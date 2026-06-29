@@ -13,5 +13,5 @@ export const site = {
   },
   formEndpoint: '/api/submitForm',
   // GA4 measurement id (e.g. 'G-XXXX'); empty disables analytics. Owner to provide (spec §12).
-  ga4Id: '',
+  ga4Id: 'G-2031Z8D3W0',
 } as const;
