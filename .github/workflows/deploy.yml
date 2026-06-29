@@ -4,6 +4,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+# Required for keyless auth: id-token lets the job mint a GitHub OIDC token that
+# Google's Workload Identity Federation exchanges for short-lived credentials.
+permissions:
+  contents: read
+  id-token: write
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -20,21 +25,22 @@ jobs:
         run: |
           cd functions && npm ci
           cd test && npm install && npm test
-      # Hosting: preview channel on PRs, live channel on push to main.
-      - name: Deploy Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      # Authenticate to Google Cloud via Workload Identity Federation (keyless).
+      # Exports GOOGLE_APPLICATION_CREDENTIALS for firebase-tools to pick up.
+      - id: auth
+        uses: google-github-actions/auth@v2
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ballmeccaweb
-          channelId: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'live' }}
+          workload_identity_provider: projects/760593328259/locations/global/workloadIdentityPools/github/providers/github-provider
+          service_account: github-deploy@ballmeccaweb.iam.gserviceaccount.com
+      # Hosting: preview channel on PRs, live channel on push to main.
+      - name: Deploy Hosting (preview on PR)
+        if: github.event_name == 'pull_request'
+        run: npx --yes firebase-tools@13 hosting:channel:deploy "pr-${{ github.event.number }}" --project ballmeccaweb --expires 7d --non-interactive
+      - name: Deploy Hosting (live on push)
+        if: github.event_name == 'push'
+        run: npx --yes firebase-tools@13 deploy --only hosting --project ballmeccaweb --non-interactive
       # Functions: deploy ONLY on push to main (the /api/submitForm rewrite
-      # depends on this function; action-hosting-deploy does not deploy it).
+      # depends on this function).
       - name: Deploy Functions
         if: github.event_name == 'push'
-        env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: |
-          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
-          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
-          npx --yes firebase-tools@13 deploy --only functions --project ballmeccaweb --non-interactive
+        run: npx --yes firebase-tools@13 deploy --only functions --project ballmeccaweb --non-interactive
