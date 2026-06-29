@@ -22,6 +22,12 @@ const canonicalPath = path === '/' ? path : (path.endsWith('/') ? path : path + 
 const canonical = new URL(canonicalPath, site.url).href;
 const ogAbs = new URL(ogImage, site.url).href;
 const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} | ${site.name}`;
+// The bundled default card is a known 1200×630; declaring its dimensions helps
+// scrapers (LinkedIn/Slack) render reliably. Custom per-page images (e.g. blog
+// heroImage) may differ, so only emit dimensions for the default.
+const DEFAULT_OG = '/images/og-default.jpg';
+const usingDefaultOg = ogImage === DEFAULT_OG;
+const ogImageAlt = usingDefaultOg ? `${site.name} — ${site.tagline}` : fullTitle;
 ---
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
@@ -35,7 +41,11 @@ const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} 
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogAbs} />
+{usingDefaultOg && <meta property="og:image:width" content="1200" />}
+{usingDefaultOg && <meta property="og:image:height" content="630" />}
+<meta property="og:image:alt" content={ogImageAlt} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogAbs} />
+<meta name="twitter:image:alt" content={ogImageAlt} />
