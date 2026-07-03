@@ -9,7 +9,7 @@ export const faqCategories: FaqCategory[] = [
     items: [
       {
         q: 'What is Ballmecca?',
-        a: "Ballmecca is a sports coaching marketplace that connects athletes with verified coaches through short video sessions. Athletes upload a clip of their performance, a coach reviews it and sends back 1–5 minutes of personalized feedback and drills. It's elite coaching made affordable and accessible — anytime, anywhere.",
+        a: "Ballmecca is a sports coaching marketplace that connects athletes with credential-checked coaches through short video sessions. Athletes upload a clip of their performance, a coach reviews it and sends back 1–5 minutes of personalized feedback and drills. It's elite coaching made affordable and accessible — anytime, anywhere.",
       },
       {
         q: 'What sports does Ballmecca cover?',
@@ -34,7 +34,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: 'Is Ballmecca safe for my child?',
-        a: 'Yes. All coaches are verified before they can accept sessions. Parental consent is required for athletes under 13. All payments are handled securely through Stripe. We take the safety of young athletes very seriously — it\'s core to everything we build.',
+        a: 'We review coaches\' credentials before they can accept sessions (a credential check, not a background check). Young athletes use parent-managed accounts, and parental consent is required for athletes under 13. All payments are handled securely through Stripe. We take the safety of young athletes seriously — it\'s core to everything we build.',
       },
       {
         q: "What if I'm not happy with my session?",
