@@ -1,0 +1,86 @@
+---
+import { site } from '../data/site';
+---
+<div id="bm-consent" class="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent-card">
+    <p class="consent-eyebrow">Your privacy</p>
+    <p class="consent-text">
+      We use Google Analytics to understand how Ballmecca is used and make it better.
+      Accept to help us improve, or decline — nothing analytics-related loads without your OK.
+      See our <a href="/policies#cookie">Cookie Policy</a>.
+    </p>
+    <div class="consent-actions">
+      <button type="button" id="bm-consent-accept" class="btn btn-accent consent-btn">Accept</button>
+      <button type="button" id="bm-consent-decline" class="btn btn-outline consent-btn">Decline</button>
+    </div>
+  </div>
+</div>
+<script is:inline define:vars={{ gaId: site.ga4Id }}>
+  (function () {
+    if (!gaId) return; // nothing to consent to
+    var KEY = 'bm-consent';
+    function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+    var gaLoaded = false;
+    function loadGA() {
+      if (gaLoaded) return; gaLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', gaId);
+    }
+
+    var el = document.getElementById('bm-consent');
+    function show() { if (el) { el.hidden = false; requestAnimationFrame(function () { el.classList.add('is-in'); }); } }
+    function hide() { if (el) { el.classList.remove('is-in'); el.hidden = true; } }
+    function grant() { save('granted'); window.__bmConsent = 'granted'; loadGA(); hide(); }
+    function deny() { save('denied'); window.__bmConsent = 'denied'; hide(); }
+
+    var stored = get();
+    // Honor Global Privacy Control (a valid CPRA opt-out signal) for a first-time visitor.
+    var gpc = (navigator.globalPrivacyControl === true);
+    if (stored === 'granted') { window.__bmConsent = 'granted'; loadGA(); }
+    else if (stored === 'denied') { window.__bmConsent = 'denied'; }
+    else if (gpc) { window.__bmConsent = 'denied'; save('denied'); }
+    else { window.__bmConsent = 'pending'; show(); }
+
+    var a = document.getElementById('bm-consent-accept'); if (a) a.addEventListener('click', grant);
+    var d = document.getElementById('bm-consent-decline'); if (d) d.addEventListener('click', deny);
+    // The footer "Your Privacy Choices" link reopens the banner to change the decision.
+    var pc = document.getElementById('bm-privacy-choices');
+    if (pc) pc.addEventListener('click', function (e) { e.preventDefault(); show(); });
+    window.bmOpenPrivacyChoices = show;
+  })();
+</script>
+<style>
+  .consent { position: fixed; left: 20px; bottom: 20px; z-index: 60; max-width: 420px; }
+  .consent[hidden] { display: none; }
+  .consent-card {
+    background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--link);
+    border-radius: var(--radius-md); padding: 20px 22px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+    transform: translateY(14px); opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.4s ease;
+  }
+  .consent.is-in .consent-card { transform: translateY(0); opacity: 1; }
+  .consent-eyebrow {
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1.5px;
+    font-size: 12px; color: var(--link); margin: 0 0 6px;
+  }
+  .consent-text { font-size: 13.5px; line-height: 1.55; color: var(--on-surface-variant); margin: 0 0 16px; }
+  .consent-text a { color: var(--link); text-underline-offset: 2px; }
+  .consent-actions { display: flex; gap: 10px; }
+  .consent-btn { padding: 9px 20px; font-size: 14px; }
+  @media (max-width: 520px) {
+    .consent { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+    .consent-actions .consent-btn { flex: 1; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .consent-card { transition: none; transform: none; opacity: 1; }
+  }
+</style>
