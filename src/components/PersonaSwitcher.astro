@@ -21,7 +21,7 @@ const { active } = Astro.props;
   .switcher a { display:inline-block; padding:10px 16px; min-height:44px; border-radius:999px;
     border:1px solid var(--border); color:var(--on-surface); font-weight:700; font-size:14px; }
   .switcher a:hover { text-decoration:none; border-color:var(--link); }
-  .switcher a[aria-current='true'] { background:var(--link); color:var(--on-link); border-color:var(--link); }
+  .switcher a[aria-current='true'] { background:var(--link-strong); color:var(--on-link); border-color:var(--link-strong); }
 </style>
 <script>
   import { setPersona } from '../lib/persona';
