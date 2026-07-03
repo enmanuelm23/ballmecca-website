@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 function initial(name: string) { return name.replace(/^Coach\s+/i, '').trim()[0] ?? '?'; }
 ---
 <section class="container coaches" data-reveal>
-  <p class="eyebrow text-accent">Top performers</p>
+  <p class="eyebrow text-accent">Game changers</p>
   <h2 class="display coaches-title">Meet our coaches.</h2>
   <div class="coaches-grid">
     {featuredCoaches.map((c) => (
