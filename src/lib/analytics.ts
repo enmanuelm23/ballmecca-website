@@ -1,5 +1,7 @@
 export function send(event: string, params: Record<string, string> = {}) {
   if (typeof window === 'undefined') return;
+  // Respect the visitor's consent choice (set by ConsentBanner). No consent → no tracking.
+  if ((window as unknown as { __bmConsent?: string }).__bmConsent !== 'granted') return;
   if (import.meta.env.DEV) console.debug('[analytics]', event, params);
   // @ts-expect-error optional global
   if (typeof window.gtag === 'function') {
