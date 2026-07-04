@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import JsonLd from './JsonLd.astro';
 interface Props {
   title: string;
   description?: string;
@@ -28,6 +29,24 @@ const fullTitle = path === '/' ? `${site.name} — ${site.tagline}` : `${title} 
 const DEFAULT_OG = '/images/og-default.jpg';
 const usingDefaultOg = ogImage === DEFAULT_OG;
 const ogImageAlt = usingDefaultOg ? `${site.name} — ${site.tagline}` : fullTitle;
+// Site-level structured data (Organization + WebSite) — declared once, on the
+// homepage — so Google can associate the brand name, logo, and social profiles.
+const isHome = path === '/';
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  logo: new URL('/images/logo-cyan.png', site.url).href,
+  email: site.email,
+  sameAs: [site.social.instagram, site.social.youtube],
+};
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+};
 ---
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
@@ -49,3 +68,5 @@ const ogImageAlt = usingDefaultOg ? `${site.name} — ${site.tagline}` : fullTit
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogAbs} />
 <meta name="twitter:image:alt" content={ogImageAlt} />
+{isHome && <JsonLd schema={orgSchema} />}
+{isHome && <JsonLd schema={websiteSchema} />}
