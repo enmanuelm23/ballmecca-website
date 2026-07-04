@@ -6,6 +6,10 @@
   --brand-chrome: #06466A;
   --primary-action: #F35E0A;
   --link: #08B4B6;
+  /* Web-only: darker fills of the two brand colors that pass WCAG AA (>=4.5:1)
+     with white text — used for filled buttons/badges. Not mirrored from Dart. */
+  --primary-action-strong: #C2410C;
+  --link-strong: #0F766E;
 
   --canvas: #000000;
   --surface: #22222E;
