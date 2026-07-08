@@ -24,7 +24,11 @@ a:hover { text-decoration: underline; }
    nav, buttons, badges, and card links keep their own styling. */
 .pol-body a, .footer-grid a, .trust-card a, .about-prose a, .faq-answer a { text-decoration: underline; text-underline-offset: 2px; }
 img { max-width: 100%; height: auto; display: block; }
-.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--space-3); }
+/* The container ALWAYS keeps a comfortable side gutter. Many sections set a
+   `padding: X 0 Y` shorthand (which zeroes horizontal padding) on the same
+   element — !important guarantees the gutter so content is never edge-to-edge
+   on mobile. Gutter scales 20px (mobile) → 28px. */
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(20px, 4vw, 28px) !important; }
 .text-accent { color: var(--link); }
 .text-warm { color: var(--primary-action); }
 .text-muted { color: var(--on-surface-variant); }
