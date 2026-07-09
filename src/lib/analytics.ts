@@ -1,16 +1,11 @@
 export function send(event: string, params: Record<string, string> = {}) {
   if (typeof window === 'undefined') return;
-  // Respect the visitor's consent choice (set by ConsentBanner). No consent → no tracking.
-  if ((window as unknown as { __bmConsent?: string }).__bmConsent !== 'granted') return;
   if (import.meta.env.DEV) console.debug('[analytics]', event, params);
-  // @ts-expect-error optional global
-  if (typeof window.gtag === 'function') {
-    // @ts-expect-error optional global
-    window.gtag('event', event, params);
-  } else {
-    // @ts-expect-error optional global
-    window.dataLayer?.push({ event, ...params });
-  }
+  // Consent Mode v2 governs whether this hit uses cookies (via gtag's consent
+  // state), so we always forward the event to gtag — which is bootstrapped in the
+  // document head. No consent yet → the tag sends it as a cookieless ping.
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+  if (typeof w.gtag === 'function') w.gtag('event', event, params);
 }
 
 let delegated = false;
