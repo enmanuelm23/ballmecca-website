@@ -16,8 +16,10 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { font-family: var(--font-heading); line-height: 1.1; }
-.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .5px; line-height: .95; }
+h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; }
+/* Anton is a very condensed display face — uppercase runs read packed without
+   tracking. `em` keeps the spacing proportional across the 40–88px title range. */
+.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.045em; line-height: 1.0; }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 /* Links inside text/content blocks need a non-color affordance (WCAG 1.4.1) —
@@ -25,8 +27,8 @@ a:hover { text-decoration: underline; }
 .pol-body a, .footer-grid a, .trust-card a, .about-prose a, .faq-answer a { text-decoration: underline; text-underline-offset: 2px; }
 /* Policy document typography — shared by the /policies hub and each dedicated
    policy page (kept global because policy content arrives through a <slot />). */
-.pol-body h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 40px); }
-.pol-body h2 { font-family: var(--font-display); margin-top: 32px; }
+.pol-body h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 40px); letter-spacing: 0.03em; }
+.pol-body h2 { font-family: var(--font-display); margin-top: 32px; letter-spacing: 0.03em; }
 .pol-body .last-updated { font-size: 13px; margin-top: -4px; }
 img { max-width: 100%; height: auto; display: block; }
 /* The container ALWAYS keeps a comfortable side gutter. Many sections set a
