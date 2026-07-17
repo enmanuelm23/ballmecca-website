@@ -23,6 +23,11 @@ a:hover { text-decoration: underline; }
 /* Links inside text/content blocks need a non-color affordance (WCAG 1.4.1) —
    nav, buttons, badges, and card links keep their own styling. */
 .pol-body a, .footer-grid a, .trust-card a, .about-prose a, .faq-answer a { text-decoration: underline; text-underline-offset: 2px; }
+/* Policy document typography — shared by the /policies hub and each dedicated
+   policy page (kept global because policy content arrives through a <slot />). */
+.pol-body h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 40px); }
+.pol-body h2 { font-family: var(--font-display); margin-top: 32px; }
+.pol-body .last-updated { font-size: 13px; margin-top: -4px; }
 img { max-width: 100%; height: auto; display: block; }
 /* The container ALWAYS keeps a comfortable side gutter. Many sections set a
    `padding: X 0 Y` shorthand (which zeroes horizontal padding) on the same

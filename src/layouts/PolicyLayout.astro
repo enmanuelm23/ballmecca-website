@@ -1,0 +1,19 @@
+---
+import BaseLayout from './BaseLayout.astro';
+interface Props { title: string; description: string; path: string }
+const { title, description, path } = Astro.props;
+---
+<BaseLayout title={title} description={description} path={path}>
+  <section class="container pol-page">
+    <p class="pol-back"><a href="/policies">&larr; All policies</a></p>
+    <div class="pol-body pol-single">
+      <slot />
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  /* Layout chrome only. The policy typography lives in global.css because the
+     content arrives via <slot /> and Astro's scoped styles don't reach it. */
+  .pol-page { padding: 40px 0 80px; max-width: 820px; }
+  .pol-back { font-size: 14px; margin: 0 0 4px; }
+</style>
