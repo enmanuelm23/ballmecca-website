@@ -16,8 +16,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { font-family: var(--font-heading); line-height: 1.1; }
-.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .5px; line-height: .95; }
+h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; }
+.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .5px; line-height: 1.0; }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 /* Links inside text/content blocks need a non-color affordance (WCAG 1.4.1) —

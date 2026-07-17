@@ -23,5 +23,5 @@ const { title, items, seeAllLink = false } = Astro.props;
   .faq-item summary::-webkit-details-marker { display:none; }
   .faq-item summary::after { content:'+'; float:right; color:var(--link); }
   .faq-item[open] summary::after { content:'–'; }
-  .faq-answer { padding-top:10px; }
+  .faq-answer { padding-top:10px; max-width:68ch; }
 </style>
