@@ -6,7 +6,7 @@ export const team: TeamMember[] = [
   {
     name: 'Enmanuel Madera',
     role: 'CEO',
-    bio: "A former baseball player who went on to become a proud nerd in college, majoring in Aerospace and Mechanical Engineering. Now building the tools to put quality coaching within every athlete's reach.",
+    bio: 'A former baseball player who couldn’t afford private lessons growing up. Sang plenty of “Country Roads” at West Virginia University while majoring in Aerospace and Mechanical Engineering. Now building the tools to put quality coaching within every athlete’s reach.',
   },
   {
     name: 'Tess Madera',

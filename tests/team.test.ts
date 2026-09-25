@@ -23,10 +23,13 @@ describe('core team', () => {
     }
   });
 
-  it("gives Enmanuel the humbler bio: baseball to engineering, no 'visionary'", () => {
+  it("uses Enmanuel's chosen bio: baseball, WVU, engineering", () => {
     const bio = team.find((t) => t.name === 'Enmanuel Madera')!.bio;
-    expect(bio).toMatch(/baseball/i);
-    expect(bio).toContain('Aerospace and Mechanical Engineering');
+    expect(bio).toBe(
+      'A former baseball player who couldn’t afford private lessons growing up. ' +
+        'Sang plenty of “Country Roads” at West Virginia University while majoring in Aerospace and Mechanical Engineering. ' +
+        'Now building the tools to put quality coaching within every athlete’s reach.',
+    );
     expect(bio).not.toMatch(/visionary/i);
   });
 });
