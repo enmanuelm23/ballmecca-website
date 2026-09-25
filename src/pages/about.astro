@@ -1,14 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { team, lineup } from '../data/team';
 const values = [
   { h: 'Wisdom', p: 'Learning from experience, mentors, and the game itself.' },
   { h: 'Cura Personalis', p: 'Latin for "care for the whole person." We believe in nurturing athletes not just as players, but as people.' },
   { h: 'Discipline', p: 'Building habits that lead to excellence, on the field and in the office.' },
   { h: 'Access', p: 'No athlete should be limited by their zip code. Elite coaching belongs to everyone.' },
-];
-const team = [
-  { name: 'Manny Madera', role: 'CEO', bio: 'Founder and visionary behind Ballmecca. Passionate about using technology to democratize access to elite coaching for youth athletes everywhere.' },
-  { name: 'Amelia Arabe', role: 'CXIO', bio: 'Leading community experience and operations. A cellist and multi-sport athlete who believes that excellence in sport and in life go hand in hand.' },
 ];
 const partners = [
   { logo: 'LPF', name: 'Leveling the Playing Field', p: 'LPF tackles the growing challenge of the "pay-to-play" model in athletics. They are a non-profit ensuring access to equipment and opportunity for underserved youth.' },
@@ -60,7 +57,7 @@ const partners = [
     </div>
   </section>
 
-  <section class="container about-section about-section-last">
+  <section class="container about-section">
     <p class="eyebrow text-warm">Partnerships that power us</p>
     <h2 class="display about-h">Our impact is amplified through partnerships aligned with our vision.</h2>
     <div class="about-grid">
@@ -72,6 +69,19 @@ const partners = [
         </div>
       ))}
     </div>
+  </section>
+
+  <section class="container about-section about-section-last">
+    <p class="eyebrow text-accent">Team members who helped bring Ballmecca to life</p>
+    <h2 class="display about-h">The original lineup.</h2>
+    <ul class="lineup">
+      {lineup.map((c) => (
+        <li class="lineup-item">
+          <h3 class="lineup-name">{c.name}</h3>
+          <p class="text-muted lineup-credit">{c.credit}</p>
+        </li>
+      ))}
+    </ul>
   </section>
 </BaseLayout>
 <style>
@@ -87,5 +97,9 @@ const partners = [
   .about-role { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
   .about-name { margin:4px 0 8px; }
   .about-logo { font-size:24px; margin-bottom:8px; }
-  @media (max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
+  .lineup { list-style:none; padding:0; margin:20px 0 0; display:grid; grid-template-columns:repeat(2,1fr); column-gap:40px; }
+  .lineup-item { padding:16px 0; border-top:1px solid rgba(255,255,255,.08); }
+  .lineup-name { margin:0 0 4px; font-size:18px; }
+  .lineup-credit { margin:0; font-size:15px; line-height:1.6; }
+  @media (max-width:640px){ .about-grid, .lineup { grid-template-columns:1fr; } }
 </style>
