@@ -9,7 +9,7 @@ const { persona } = Astro.props;
 ---
 <section class="p-hero">
   <div class="container">
-    <p class="eyebrow text-accent">For {persona.noun}s</p>
+    <p class="eyebrow text-accent">For {persona.plural}</p>
     <h1 class="display p-hero-title">{persona.heroPromise}</h1>
     <p class="p-hero-sub text-muted">{persona.heroSub}</p>
     {persona.primaryCta === 'download'
@@ -19,13 +19,15 @@ const { persona } = Astro.props;
 </section>
 
 <section class="container p-why">
-  <h2 class="display">Why {persona.noun.toLowerCase()}s choose Ballmecca</h2>
+  <h2 class="display">Why {persona.plural.toLowerCase()} choose Ballmecca</h2>
   <div class="p-why-grid">
     {persona.why.map((w) => (
       <div class="p-why-card"><h3>{w.heading}</h3><p class="text-muted">{w.body}</p></div>
     ))}
   </div>
 </section>
+
+<slot name="after-why" />
 
 <section class="p-band"><div class="container">
   <h2 class="display">{persona.model.heading}</h2>

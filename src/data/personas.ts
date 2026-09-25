@@ -5,7 +5,7 @@ export interface PersonaFaq { q: string; a: string }
 
 export interface Persona {
   key: PersonaKey;
-  noun: string; article: 'an' | 'a'; emoji: string; href: string;
+  noun: string; plural: string; article: 'an' | 'a'; emoji: string; href: string;
   tagline: string;            // selector card subtitle
   cta: string;                // selector card CTA label
   seoTitle: string; seoDescription: string;
@@ -21,7 +21,7 @@ export interface Persona {
 
 export const personas: Persona[] = [
   {
-    key: 'athlete', noun: 'Athlete', article: 'an', emoji: '🏅', href: '/athletes',
+    key: 'athlete', noun: 'Athlete', plural: 'Athletes', article: 'an', emoji: '🏅', href: '/athletes',
     tagline: 'Train like the pros, from your phone.', cta: 'Explore for athletes',
     seoTitle: 'Online Sports Coaching for Athletes',
     seoDescription: 'Upload a clip and get personalized video feedback from credential-checked coaches in days. Affordable 1-on-1 sports coaching for athletes of every level.',
@@ -43,7 +43,7 @@ export const personas: Persona[] = [
     keywords: 'online sports coaching, video analysis for athletes, remote sports coach',
   },
   {
-    key: 'coach', noun: 'Coach', article: 'a', emoji: '🎽', href: '/coaches',
+    key: 'coach', noun: 'Coach', plural: 'Coaches', article: 'a', emoji: '🎽', href: '/coaches',
     tagline: 'Build your coaching business.', cta: 'Explore for coaches',
     seoTitle: 'Grow Your Coaching Business',
     seoDescription: 'Coach athletes anywhere, set your own prices, and get paid via Stripe. Build your roster and earn with Ballmecca\'s referral and subscription model.',
@@ -65,7 +65,7 @@ export const personas: Persona[] = [
     keywords: 'become a sports coach online, coaching business app, get paid to coach',
   },
   {
-    key: 'recruiter', noun: 'Recruiter', article: 'a', emoji: '🔎', href: '/recruiters',
+    key: 'recruiter', noun: 'Recruiter', plural: 'Recruiters', article: 'a', emoji: '🔎', href: '/recruiters',
     tagline: 'Discover verified talent. Early access.', cta: 'Get early access',
     seoTitle: 'Discover Verified Athlete Talent (Early Access)',
     seoDescription: 'Ballmecca is building tools for recruiters to discover verified, up-and-coming athletes by sport and skill. Join early access to help shape it.',

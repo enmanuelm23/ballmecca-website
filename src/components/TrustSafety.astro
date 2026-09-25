@@ -1,54 +1,123 @@
 ---
+// Homepage Trust & Safety, shown with the real parent screens. The numbered
+// markers on the screens match the numbered points beside them.
 import Icon from './Icon.astro';
-const pillars = [
-  {
-    title: 'Credentialed coaches',
-    icon: 'badge-check',
-    body: 'We review the credentials each coach submits before they can coach on Ballmecca — a credential check, not a background check or a guarantee of safety.',
-  },
-  {
-    title: 'Built for young athletes',
-    icon: 'users',
-    body: 'Minors use parent-managed accounts, so a parent stays in control of bookings and messaging.',
-  },
-  {
-    title: 'Secure payments',
-    icon: 'lock',
-    body: 'Payments are processed securely through Stripe. You only pay for sessions you book.',
-  },
-  {
-    title: 'Privacy first',
-    icon: 'shield',
-    body: 'We take youth safety and data privacy seriously.',
-    link: { href: '/policies#privacy', label: 'see our Privacy Policy' },
-  },
-];
+import PhoneFrame from './PhoneFrame.astro';
+import { trustPoints, trustPillars, type ScreenKey } from '../data/appScreens';
+
+const phones: ScreenKey[] = ['parent-verify', 'parent-controls'];
+const markersOn = (screen: ScreenKey) =>
+  trustPoints.map((t, i) => ({ n: i + 1, ...t.marker })).filter((m) => m.screen === screen);
 ---
 <section class="container trust" data-reveal>
-  <p class="eyebrow text-accent">Trust &amp; Safety</p>
-  <h2 class="display trust-title">Coaching parents can trust.</h2>
-  <div class="trust-grid">
-    {pillars.map((p) => (
-      <article class="trust-card elevate">
+  <div class="trust-main">
+    <div class="trust-head">
+      <p class="eyebrow text-accent">Trust &amp; Safety</p>
+      <h2 class="display trust-title">Coaching parents can trust.</h2>
+      <p class="text-muted trust-intro">Parents of young athletes stay in charge, and these are the real screens they use.</p>
+    </div>
+    <div class="trust-phones">
+      {phones.map((screen) => (
+        <div class={`trust-phone trust-phone-${screen}`}>
+          <PhoneFrame screen={screen} sizes="(max-width: 960px) 44vw, 248px">
+            {markersOn(screen).map((m) => (
+              <span class="trust-marker" style={`left:${m.x}%;top:${m.y}%`} aria-hidden="true">{m.n}</span>
+            ))}
+          </PhoneFrame>
+        </div>
+      ))}
+    </div>
+    <div class="trust-body">
+      <ol class="trust-points">
+        {trustPoints.map((t, i) => (
+          <li>
+            <span class="trust-num" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3>{t.title}</h3>
+              <p class="text-muted">{t.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="text-muted trust-policy">See how we handle children's information in our <a href="/privacy-policy">Privacy Policy</a>.</p>
+    </div>
+  </div>
+  <div class="trust-pillars">
+    {trustPillars.map((p) => (
+      <article class="trust-card">
         <span class="trust-mark"><Icon name={p.icon} size={22} /></span>
-        <h3>{p.title}</h3>
-        <p class="text-muted">
-          {p.body}{p.link && (<> <a href={p.link.href}>{p.link.label}</a>.</>)}
-        </p>
+        <div>
+          <h3>{p.title}</h3>
+          <p class="text-muted">{p.body}</p>
+        </div>
       </article>
     ))}
   </div>
 </section>
 <style>
-  .trust { padding:40px 0 80px; }
-  .trust-title { font-size:40px; margin:8px 0 24px; }
-  .trust-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-  .trust-card { background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--link);
-    border-radius:var(--radius-md); padding:24px; }
-  .trust-mark { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px;
-    border-radius:999px; background:var(--link-strong); color:var(--on-primary-action); line-height:0; }
-  .trust-card h3 { margin:14px 0 8px; font-size:18px; }
-  .trust-card p { font-size:14px; line-height:1.6; }
-  @media (max-width:1024px){ .trust-grid{ grid-template-columns:1fr 1fr; } }
-  @media (max-width:560px){ .trust-grid{ grid-template-columns:1fr; } }
+  .trust { padding: 56px 0 88px; }
+  /* Desktop: heading and points on the left, phones spanning the right.
+     Narrow: heading, then phones, then points. */
+  .trust-main {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "head phones" "body phones";
+    column-gap: 56px;
+    align-items: start;
+  }
+  .trust-head { grid-area: head; }
+  .trust-body { grid-area: body; }
+  .trust-phones { grid-area: phones; }
+  .trust-title { font-size: clamp(32px, 4vw, 44px); margin: 8px 0 14px; }
+  .trust-intro { margin: 0; font-size: 17px; }
+
+  .trust-points { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-direction: column; gap: 22px; }
+  .trust-points li { display: flex; gap: 16px; align-items: flex-start; }
+  .trust-points h3 { margin: 0 0 4px; font-size: 19px; line-height: 1.3; }
+  .trust-points p { margin: 0; font-size: 15px; line-height: 1.6; }
+  .trust-num, .trust-marker {
+    flex-shrink: 0; width: 30px; height: 30px; box-sizing: border-box; border-radius: 999px;
+    background: var(--link); color: #00191a;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;
+  }
+  .trust-marker {
+    position: absolute; transform: translate(-50%, -50%);
+    border: 3px solid var(--canvas); box-shadow: 0 0 0 4px rgba(8,180,182,.28); font-size: 13px;
+  }
+  .trust-policy { margin: 24px 0 0; font-size: 14px; }
+  .trust-policy a { text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Two phones share the column: each takes half of it (less the gap), up to 248px.
+     cqi = the column's own width, so this never overflows on narrow screens. */
+  .trust-phones {
+    --gap: 20px;
+    container-type: inline-size;
+    --phone-w: min(calc((100cqi - var(--gap)) / 2), 248px);
+    display: flex; justify-content: center; gap: var(--gap);
+  }
+  .trust-phone-parent-verify { margin-top: 64px; }
+
+  .trust-pillars { margin-top: 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .trust-card {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px;
+  }
+  .trust-mark {
+    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+    border-radius: 999px; background: var(--link-strong); color: var(--on-primary-action); line-height: 0;
+  }
+  .trust-card h3 { margin: 0 0 4px; font-size: 17px; }
+  .trust-card p { margin: 0; font-size: 14px; line-height: 1.6; }
+
+  @media (max-width: 960px) {
+    .trust-main { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: "head" "phones" "body"; row-gap: 28px; }
+    .trust-phones { --gap: 14px; }
+    .trust-phone-parent-verify { margin-top: 0; }
+    .trust-points { margin-top: 4px; }
+  }
+  @media (max-width: 700px) {
+    .trust-marker { width: 24px; height: 24px; font-size: 11px; border-width: 2px; box-shadow: 0 0 0 3px rgba(8,180,182,.28); }
+    .trust-pillars { grid-template-columns: 1fr; }
+  }
 </style>
