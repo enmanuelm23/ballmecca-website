@@ -24,5 +24,5 @@ export const lineup: Contributor[] = [
   { name: 'Misgana Yousief', credit: 'Developed the original Coach Mecha AI assistant.' },
   { name: 'Katherine Pena', credit: "Led Ballmecca's first sales efforts and helped pivot the business toward the coach subscription model." },
   { name: 'Laura Rodriguez', credit: "Our first intern. Created Ballmecca's first polished visual materials and took Enmanuel and Justin's first photo as co-founders." },
-  { name: 'Felix Laniyan', credit: 'Developed the first version of the Ballmecca Sports House Map.' },
+  { name: 'Felix Laniyan', credit: 'Our second intern. Developed the first version of the Ballmecca Sports House Map.' },
 ];

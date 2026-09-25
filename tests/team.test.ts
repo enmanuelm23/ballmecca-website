@@ -65,6 +65,7 @@ describe('the original lineup', () => {
     expect(credit('Laura Rodriguez')).toMatch(/intern/i);
     expect(credit('Laura Rodriguez')).toMatch(/photo/i);
     expect(credit('Felix Laniyan')).toMatch(/Sports House Map/);
+    expect(credit('Felix Laniyan')).toMatch(/^Our second intern\./);
   });
 
   it('does not label Justin as a co-founder', () => {
