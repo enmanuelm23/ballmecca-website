@@ -4,7 +4,7 @@ export interface Contributor { name: string; credit: string }
 // "Meet the team" on the About page.
 export const team: TeamMember[] = [
   {
-    name: 'Manny Madera',
+    name: 'Enmanuel Madera',
     role: 'CEO',
     bio: "A former baseball player who went on to become a proud nerd in college, majoring in Aerospace and Mechanical Engineering. Now building the tools to put quality coaching within every athlete's reach.",
   },
@@ -23,6 +23,6 @@ export const lineup: Contributor[] = [
   { name: 'Perla Peralta', credit: "Developed Ballmecca's original marketing strategy." },
   { name: 'Misgana Yousief', credit: 'Developed the original Coach Mecha AI assistant.' },
   { name: 'Katherine Pena', credit: "Led Ballmecca's first sales efforts and helped pivot the business toward the coach subscription model." },
-  { name: 'Laura Rodriguez', credit: "Our first intern. Created Ballmecca's first polished visual materials and took Manny and Justin's first photo as co-founders." },
+  { name: 'Laura Rodriguez', credit: "Our first intern. Created Ballmecca's first polished visual materials and took Enmanuel and Justin's first photo as co-founders." },
   { name: 'Felix Laniyan', credit: 'Developed the first version of the Ballmecca Sports House Map.' },
 ];

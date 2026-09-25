@@ -2,16 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { team, lineup } from '../src/data/team';
 
 // Expectations come from the requested About-page change (Sept 2026), not from
-// the implementation: Tess replaces Amelia on the core team, Manny's bio is
+// the implementation: Tess replaces Amelia on the core team, Enmanuel's bio is
 // toned down, and Amelia plus six early contributors move to "The original
 // lineup" at the bottom of the page.
 
 const names = (xs: { name: string }[]) => xs.map((x) => x.name);
 
 describe('core team', () => {
-  it('is exactly Manny (CEO) then Tess (Chief Brand Officer)', () => {
+  it('is exactly Enmanuel (CEO) then Tess (Chief Brand Officer)', () => {
     expect(team.map(({ name, role }) => ({ name, role }))).toEqual([
-      { name: 'Manny Madera', role: 'CEO' },
+      { name: 'Enmanuel Madera', role: 'CEO' },
       { name: 'Tess Madera', role: 'Chief Brand Officer' },
     ]);
   });
@@ -23,12 +23,17 @@ describe('core team', () => {
     }
   });
 
-  it("gives Manny the humbler bio: baseball to engineering, no 'visionary'", () => {
-    const bio = team.find((t) => t.name === 'Manny Madera')!.bio;
+  it("gives Enmanuel the humbler bio: baseball to engineering, no 'visionary'", () => {
+    const bio = team.find((t) => t.name === 'Enmanuel Madera')!.bio;
     expect(bio).toMatch(/baseball/i);
     expect(bio).toContain('Aerospace and Mechanical Engineering');
     expect(bio).not.toMatch(/visionary/i);
   });
+});
+
+it('uses the name Enmanuel everywhere, never Manny', () => {
+  expect(JSON.stringify({ team, lineup })).not.toMatch(/Manny/);
+  expect(lineup.find((c) => c.name === 'Laura Rodriguez')!.credit).toContain("Enmanuel and Justin's first photo");
 });
 
 describe('the original lineup', () => {
