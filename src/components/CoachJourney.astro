@@ -5,9 +5,10 @@ import PhoneFrame from './PhoneFrame.astro';
 import { journeySteps, mecha } from '../data/appScreens';
 
 // On phones these screens sit close enough to the top that Chrome fetches them
-// during the first load, despite lazy loading. High-resolution phones would pick
-// the 720px version for a ~214px mock; capping at 540 cuts that download by about
-// a third, with no visible difference at this size.
+// during the first load, despite lazy loading. Screens sharper than ~2.5x (and 2x
+// laptops, for the wider Coach Mecha banner) picked the 720px files; capping at
+// 540 cuts the five downloads on a 3x phone from 207 KB to 143 KB. The smallest
+// in-app text is very slightly softer when magnified; hard to notice on a phone.
 const widths = [360, 540];
 ---
 <section class="journey" aria-labelledby="journey-title">
