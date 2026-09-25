@@ -19,7 +19,7 @@ export const team: TeamMember[] = [
 // Shown at the bottom of the About page, in this order.
 export const lineup: Contributor[] = [
   { name: 'Amelia Arabe', credit: 'Led community experience and operations as CXIO.' },
-  { name: 'Justin Starkman', credit: 'Developed the original Ballmecca Video Analysis tool.' },
+  { name: 'Justin Starkman', credit: 'The Original Co-founder — Developed the original Ballmecca Video Analysis tool.' },
   { name: 'Perla Peralta', credit: "Developed Ballmecca's original marketing strategy." },
   { name: 'Misgana Yousief', credit: 'Developed the original Coach Mecha AI assistant.' },
   { name: 'Katherine Pena', credit: "Led Ballmecca's first sales efforts and helped pivot the business toward the coach subscription model." },

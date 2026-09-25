@@ -68,8 +68,8 @@ describe('the original lineup', () => {
     expect(credit('Felix Laniyan')).toMatch(/^Our second intern\./);
   });
 
-  it('does not label Justin as a co-founder', () => {
+  it('credits Justin as the original co-founder', () => {
     const justin = lineup.find((c) => c.name === 'Justin Starkman')!;
-    expect(justin.credit).not.toMatch(/co-?founder/i);
+    expect(justin.credit).toBe('The Original Co-founder — Developed the original Ballmecca Video Analysis tool.');
   });
 });
