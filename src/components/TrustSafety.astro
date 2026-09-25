@@ -5,7 +5,8 @@ import Icon from './Icon.astro';
 import PhoneFrame from './PhoneFrame.astro';
 import { trustPoints, trustPillars, type ScreenKey } from '../data/appScreens';
 
-const phones: ScreenKey[] = ['parent-verify', 'parent-controls'];
+// One phone per screen the points refer to, in the order they're first used.
+const phones = [...new Set(trustPoints.map((t) => t.marker.screen))];
 const markersOn = (screen: ScreenKey) =>
   trustPoints.map((t, i) => ({ n: i + 1, ...t.marker })).filter((m) => m.screen === screen);
 ---
@@ -18,8 +19,8 @@ const markersOn = (screen: ScreenKey) =>
     </div>
     <div class="trust-phones">
       {phones.map((screen) => (
-        <div class={`trust-phone trust-phone-${screen}`}>
-          <PhoneFrame screen={screen} sizes="(max-width: 960px) 44vw, 248px">
+        <div class="trust-phone">
+          <PhoneFrame screen={screen} sizes="(max-width: 560px) calc(50vw - 27px), 248px">
             {markersOn(screen).map((m) => (
               <span class="trust-marker" style={`left:${m.x}%;top:${m.y}%`} aria-hidden="true">{m.n}</span>
             ))}
@@ -96,7 +97,7 @@ const markersOn = (screen: ScreenKey) =>
     --phone-w: min(calc((100cqi - var(--gap)) / 2), 248px);
     display: flex; justify-content: center; gap: var(--gap);
   }
-  .trust-phone-parent-verify { margin-top: 64px; }
+  .trust-phone:first-child { margin-top: 64px; } /* staggered pair on desktop */
 
   .trust-pillars { margin-top: 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .trust-card {
@@ -113,7 +114,7 @@ const markersOn = (screen: ScreenKey) =>
   @media (max-width: 960px) {
     .trust-main { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: "head" "phones" "body"; row-gap: 28px; }
     .trust-phones { --gap: 14px; }
-    .trust-phone-parent-verify { margin-top: 0; }
+    .trust-phone:first-child { margin-top: 0; }
     .trust-points { margin-top: 4px; }
   }
   @media (max-width: 700px) {

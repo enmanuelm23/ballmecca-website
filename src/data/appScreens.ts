@@ -52,11 +52,12 @@ export const journeySteps: JourneyStep[] = [
   },
 ];
 
-export const mecha = {
+// The banner that closes the journey section.
+export const mecha: JourneyStep = {
   eyebrow: 'Coach Mecha',
   title: 'Stuck on a drill? Ask Coach Mecha.',
   body: 'Your in-app AI assistant helps you brainstorm drills, practice plans and workout outlines.',
-  screen: 'coach-mecha' as ScreenKey,
+  screen: 'coach-mecha',
 };
 
 export interface TrustPoint {
@@ -76,7 +77,7 @@ export const trustPoints: TrustPoint[] = [
   },
   {
     title: 'Consent can be revoked anytime',
-    body: "One tap stops all collection and use of the athlete's data immediately.",
+    body: "Revoking consent stops all collection and use of the athlete's data immediately.",
     marker: { screen: 'parent-controls', x: 88, y: 51.3 }, // "Revoke consent" card
   },
   {

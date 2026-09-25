@@ -18,7 +18,7 @@ import { journeySteps, mecha } from '../data/appScreens';
             <span class="journey-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <PhoneFrame screen={s.screen} sizes="(max-width: 700px) 214px, 238px" />
             <div class="journey-copy">
-              <p class="journey-eyebrow">{s.eyebrow}</p>
+              <p class="eyebrow text-warm">{s.eyebrow}</p>
               <h3>{s.title}</h3>
               <p class="text-muted">{s.body}</p>
             </div>
@@ -29,7 +29,7 @@ import { journeySteps, mecha } from '../data/appScreens';
 
     <div class="journey-mecha">
       <div class="journey-mecha-copy">
-        <p class="journey-eyebrow journey-eyebrow-teal">{mecha.eyebrow}</p>
+        <p class="eyebrow text-accent">{mecha.eyebrow}</p>
         <h3 class="display">{mecha.title}</h3>
         <p class="text-muted">{mecha.body}</p>
       </div>
@@ -65,11 +65,7 @@ import { journeySteps, mecha } from '../data/appScreens';
     font-family: var(--font-display); font-size: 15px; letter-spacing: .06em; color: var(--link);
   }
   .journey-copy { align-self: stretch; }
-  .journey-eyebrow {
-    margin: 0 0 6px; font-size: 12px; font-weight: 800; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--primary-action);
-  }
-  .journey-eyebrow-teal { color: var(--link); }
+  .journey-copy .eyebrow, .journey-mecha-copy .eyebrow { margin: 0 0 6px; }
   .journey-copy h3 { margin: 0 0 6px; font-size: 20px; line-height: 1.25; }
   .journey-copy p.text-muted { margin: 0; font-size: 15px; line-height: 1.6; }
 

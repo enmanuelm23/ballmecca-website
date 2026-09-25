@@ -60,6 +60,12 @@ describe('trust section (homepage)', () => {
     expect(trustPoints[0].body).toMatch(/before any of the athlete's information is collected/);
   });
 
+  it("describes revoking consent in the app's own words, without adding claims", () => {
+    // App screen: "Stop all collection and use of your athlete's data immediately."
+    expect(trustPoints[1].body).toMatch(/stops all collection and use of the athlete's data immediately/);
+    expect(trustPoints[1].body).not.toMatch(/one tap/i); // unverified: there may be a confirmation step
+  });
+
   it('keeps the two remaining pillars: credential checks and Stripe payments', () => {
     expect(trustPillars.map((p) => p.title)).toEqual(['Credential-checked coaches', 'Secure payments']);
     expect(trustPillars[1].body).toMatch(/Stripe/);
@@ -85,15 +91,8 @@ describe('copy accuracy', () => {
 });
 
 describe('app screen images', () => {
-  const used = new Set<ScreenKey>([
-    ...journeySteps.map((s) => s.screen),
-    mecha.screen,
-    ...trustPoints.map((t) => t.marker.screen),
-    'video-analysis', 'messages', // homepage hero
-  ]);
-
-  it('has an image file and real alt text for every screen used', () => {
-    for (const key of used) {
+  it('has an image file and real alt text for every screen', () => {
+    for (const key of Object.keys(screens) as ScreenKey[]) {
       expect(existsSync(assetPath(key)), `${key}.webp`).toBe(true);
       expect(screens[key].alt.length, `${key} alt`).toBeGreaterThan(30);
     }
