@@ -3,7 +3,7 @@ import { site } from '../data/site';
 ---
 <footer class="footer">
   <div class="container footer-grid">
-    <div>
+    <div class="footer-brand">
       <div class="display footer-logo">Ballmecca</div>
       <p class="text-muted">{site.tagline}</p>
       <div class="footer-social">
@@ -32,7 +32,7 @@ import { site } from '../data/site';
         <li><a href="/cookie-policy" id="bm-privacy-choices">Your Privacy Choices</a></li>
       </ul>
     </div>
-    <div>
+    <div class="footer-app">
       <h3>Get the app</h3>
       <ul>
         <li><a href={site.appStoreUrl} target="_blank" rel="noopener">App Store</a></li>
@@ -52,4 +52,9 @@ import { site } from '../data/site';
   .footer-social { display:flex; gap:16px; margin-top:12px; }
   .footer-bottom { margin-top:40px; padding-top:20px; border-top:1px solid var(--border); }
   @media (max-width:820px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+  /* The 2×2 grid can't shrink below ~420px: the social row and the unbreakable email set its column minimums. */
+  @media (max-width:560px){
+    .footer-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+    .footer-brand, .footer-app{ grid-column:1 / -1; }
+  }
 </style>
