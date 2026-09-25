@@ -1,0 +1,114 @@
+---
+// "Your business, handled" — the coach's journey through the app, told with
+// real app screens. Shown on /coaches after "Why coaches choose Ballmecca".
+import PhoneFrame from './PhoneFrame.astro';
+import { journeySteps, mecha } from '../data/appScreens';
+
+// On phones these screens sit close enough to the top that Chrome fetches them
+// during the first load, despite lazy loading. Screens sharper than ~2.5x (and 2x
+// laptops, for the wider Coach Mecha banner) picked the 720px files; capping at
+// 540 cuts the five downloads on a 3x phone from 207 KB to 143 KB. The smallest
+// in-app text is very slightly softer when magnified; hard to notice on a phone.
+const widths = [360, 540];
+---
+<section class="journey" aria-labelledby="journey-title">
+  <div class="container">
+    <p class="eyebrow text-warm">How it works</p>
+    <h2 id="journey-title" class="display journey-title">Your business, handled.</h2>
+    <p class="text-muted journey-intro">From the first search to the finished session, the whole job lives in one app.</p>
+
+    <!-- A row of four on desktop, a 2×2 grid on tablets, a swipeable row on phones. -->
+    <div class="journey-scroller" tabindex="0" role="region" aria-label="How coaching works, step by step">
+      <ol class="journey-steps">
+        {journeySteps.map((s, i) => (
+          <li class="journey-step">
+            <span class="journey-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <PhoneFrame screen={s.screen} widths={widths} sizes="(max-width: 700px) 214px, 238px" />
+            <div class="journey-copy">
+              <p class="eyebrow text-warm">{s.eyebrow}</p>
+              <h3>{s.title}</h3>
+              <p class="text-muted">{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="journey-mecha">
+      <div class="journey-mecha-copy">
+        <p class="eyebrow text-accent">{mecha.eyebrow}</p>
+        <h3 class="display">{mecha.title}</h3>
+        <p class="text-muted">{mecha.body}</p>
+      </div>
+      <div class="journey-mecha-phone">
+        <PhoneFrame screen={mecha.screen} widths={widths} sizes="(max-width: 760px) 240px, 280px" />
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .journey { padding: 24px 0 80px; }
+  .journey-title { font-size: clamp(32px, 4.4vw, 48px); margin: 8px 0 12px; }
+  .journey-intro { max-width: 620px; font-size: 18px; margin: 0; }
+
+  .journey-scroller { margin-top: 48px; }
+  .journey-scroller:focus-visible { outline: 3px solid var(--link); outline-offset: 8px; border-radius: var(--radius-md); }
+  .journey-steps {
+    --phone-w: 238px;
+    list-style: none; margin: 0; padding: 0;
+    position: relative;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px;
+  }
+  /* The dashed line joining the step numbers (row of four only). */
+  .journey-steps::before {
+    content: ''; position: absolute; top: 17px; left: 12.5%; right: 12.5%;
+    border-top: 2px dashed rgba(8,180,182,.45);
+  }
+  .journey-step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .journey-num {
+    width: 36px; height: 36px; box-sizing: border-box; border-radius: 999px;
+    background: var(--canvas); border: 2px solid var(--link);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 15px; letter-spacing: .06em; color: var(--link);
+  }
+  .journey-copy { align-self: stretch; }
+  .journey-copy .eyebrow, .journey-mecha-copy .eyebrow { margin: 0 0 6px; }
+  .journey-copy h3 { margin: 0 0 6px; font-size: 20px; line-height: 1.25; }
+  .journey-copy p.text-muted { margin: 0; font-size: 15px; line-height: 1.6; }
+
+  .journey-mecha {
+    margin-top: 72px; height: 340px; overflow: hidden; box-sizing: border-box;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; padding: 0 56px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  }
+  .journey-mecha-copy { align-self: center; }
+  .journey-mecha-copy h3 { font-size: clamp(28px, 3vw, 36px); line-height: 1.05; margin: 0 0 12px; }
+  .journey-mecha-copy p.text-muted { margin: 0; max-width: 440px; font-size: 16px; line-height: 1.6; }
+  .journey-mecha-phone { --phone-w: 280px; display: flex; justify-content: center; padding-top: 48px; }
+  .journey-mecha-phone :global(.phone) { box-shadow: 0 0 110px -30px rgba(8,180,182,.5); }
+
+  @media (max-width: 1179px) {
+    .journey-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
+    .journey-steps::before { display: none; }
+  }
+  @media (max-width: 760px) {
+    .journey-mecha { grid-template-columns: 1fr; height: 560px; gap: 8px; padding: 28px 24px 0; }
+    .journey-mecha-phone { --phone-w: 240px; padding-top: 16px; }
+  }
+  @media (max-width: 700px) {
+    /* Swipeable row that bleeds to the screen edges. */
+    .journey-scroller {
+      overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin-inline: calc(-1 * clamp(20px, 4vw, 28px));
+      padding-inline: clamp(20px, 4vw, 28px);
+      scroll-padding-inline: clamp(20px, 4vw, 28px);
+    }
+    .journey-scroller::-webkit-scrollbar { display: none; }
+    .journey-steps { --phone-w: 214px; display: flex; gap: 16px; }
+    .journey-step {
+      flex: 0 0 min(300px, 82vw); box-sizing: border-box; scroll-snap-align: start;
+      padding: 22px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+    }
+    .journey-num { align-self: flex-start; }
+  }
+</style>
