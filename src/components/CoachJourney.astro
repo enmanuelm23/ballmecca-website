@@ -3,6 +3,12 @@
 // real app screens. Shown on /coaches after "Why coaches choose Ballmecca".
 import PhoneFrame from './PhoneFrame.astro';
 import { journeySteps, mecha } from '../data/appScreens';
+
+// On phones these screens sit close enough to the top that Chrome fetches them
+// during the first load, despite lazy loading. High-resolution phones would pick
+// the 720px version for a ~214px mock; capping at 540 cuts that download by about
+// a third, with no visible difference at this size.
+const widths = [360, 540];
 ---
 <section class="journey" aria-labelledby="journey-title">
   <div class="container">
@@ -16,7 +22,7 @@ import { journeySteps, mecha } from '../data/appScreens';
         {journeySteps.map((s, i) => (
           <li class="journey-step">
             <span class="journey-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <PhoneFrame screen={s.screen} sizes="(max-width: 700px) 214px, 238px" />
+            <PhoneFrame screen={s.screen} widths={widths} sizes="(max-width: 700px) 214px, 238px" />
             <div class="journey-copy">
               <p class="eyebrow text-warm">{s.eyebrow}</p>
               <h3>{s.title}</h3>
@@ -34,7 +40,7 @@ import { journeySteps, mecha } from '../data/appScreens';
         <p class="text-muted">{mecha.body}</p>
       </div>
       <div class="journey-mecha-phone">
-        <PhoneFrame screen={mecha.screen} sizes="(max-width: 760px) 240px, 280px" />
+        <PhoneFrame screen={mecha.screen} widths={widths} sizes="(max-width: 760px) 240px, 280px" />
       </div>
     </div>
   </div>

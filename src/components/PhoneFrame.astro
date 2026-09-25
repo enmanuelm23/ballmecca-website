@@ -12,8 +12,10 @@ interface Props {
   sizes: string;
   /** Above-the-fold hero image: load immediately and at high priority. */
   priority?: boolean;
+  /** Image widths the browser can pick from. Drop 720 to cap the download. */
+  widths?: number[];
 }
-const { screen, sizes, priority = false } = Astro.props;
+const { screen, sizes, priority = false, widths = [360, 540, 720] } = Astro.props;
 
 const files = import.meta.glob<{ default: ImageMetadata }>('../assets/app-screens/*.webp', { eager: true });
 const img = files[`../assets/app-screens/${screen}.webp`]?.default;
@@ -24,7 +26,7 @@ if (!img) throw new Error(`Missing app screen image for "${screen}" in src/asset
     <Picture
       src={img}
       alt={screens[screen].alt}
-      widths={[360, 540, 720]}
+      widths={widths}
       sizes={sizes}
       formats={['avif', 'webp']}
       loading={priority ? 'eager' : 'lazy'}
